@@ -7,8 +7,8 @@ public class CalendarResource
 {
 	public static readonly CalendarResource Instance = new();
 
-	public static readonly string January = GetMonthByNumber(0);
-	public static readonly string February = GetMonthByNumber(1);
+	public static readonly string January;
+	public static readonly string February;
 
 	private static readonly string[] MonthNames;
 
@@ -29,12 +29,32 @@ public class CalendarResource
 			"Ноябрь",
 			"Декабрь",
 		};
-	}
+		January = GetMonthByNumber(0);
+        February = GetMonthByNumber(1);
+    }
 
 	private static string GetMonthByNumber(int number)
 		=> MonthNames[number];
 
-	// ToDo реализовать индексатор для получения названия месяца по енаму Month
+	public string this[Month month] 
+	{
+		get => month switch
+		{
+			Month.January => "Январь",
+			Month.February => "Февраль",
+			Month.March => "Март",
+			Month.April => "Апрель",
+			Month.May => "Май",
+			Month.June => "Июнь",
+            Month.July => "Июль",
+            Month.August => "Август",
+            Month.September => "Сентябрь",
+            Month.October => "Октябрь",
+            Month.November => "Ноябрь",
+            Month.December => "Декабрь",
+			_ => throw new ArgumentOutOfRangeException("Несуществующий месяц")
+        };
+	}
 }
 
 public enum Month
