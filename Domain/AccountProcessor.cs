@@ -2,7 +2,6 @@
 
 public class AccountProcessor
 {
-	// ToDo Реализовать без копирования и боксинга
 	public decimal Calculate(BankAccount bankAccount)
 	{
 		return CalculateOperation(bankAccount.LastOperation) +
@@ -35,8 +34,46 @@ public class AccountProcessor
 		       CalculateOperation3(bankAccount.PreviousOperation) +
 		       CalculateOperation3(bankAccount);
 	}
+    public decimal CalculatePerformed(ref BankAccount bankAccount)
+    {
+		BankOperation lastOperation = bankAccount.LastOperation;
+		BankOperation previousOperation = bankAccount.PreviousOperation;
+        ITotalAmount lastOperationTotalAmount = lastOperation;
+        ITotalAmount previousOperationTotalAmount = previousOperation;
+		ITotalAmount bankAccountTotalAmount = bankAccount;
 
-	private decimal CalculateOperation(BankOperation bankOperation)
+        return CalculateOperationPerformed(ref lastOperation) +
+               CalculateOperationPerformed(ref previousOperation) +
+               CalculateOperation1Performed(ref lastOperation) +
+               CalculateOperation1Performed(ref previousOperation) +
+               CalculateOperation2Performed(ref lastOperation) +
+               CalculateOperation2Performed(ref previousOperation) +
+               CalculateOperation3Performed(ref lastOperationTotalAmount) +
+               CalculateOperation3Performed(ref previousOperationTotalAmount) +
+               CalculateOperation3Performed(ref bankAccountTotalAmount)
+               +									   
+               CalculateOperationPerformed(ref lastOperation) +
+               CalculateOperationPerformed(ref previousOperation) +
+               CalculateOperation1Performed(ref lastOperation) +
+               CalculateOperation1Performed(ref previousOperation) +
+               CalculateOperation2Performed(ref lastOperation) +
+               CalculateOperation2Performed(ref previousOperation) +
+               CalculateOperation3Performed(ref lastOperationTotalAmount) +
+               CalculateOperation3Performed(ref previousOperationTotalAmount) +
+               CalculateOperation3Performed(ref bankAccountTotalAmount)
+               +									   
+               CalculateOperationPerformed(ref lastOperation) +
+               CalculateOperationPerformed(ref previousOperation) +
+               CalculateOperation1Performed(ref lastOperation) +
+               CalculateOperation1Performed(ref previousOperation) +
+               CalculateOperation2Performed(ref lastOperation) +
+               CalculateOperation2Performed(ref previousOperation) +
+               CalculateOperation3Performed(ref lastOperationTotalAmount) +
+               CalculateOperation3Performed(ref previousOperationTotalAmount) +
+               CalculateOperation3Performed(ref bankAccountTotalAmount);
+    }
+
+    private decimal CalculateOperation(BankOperation bankOperation)
 	{
 		// Some calculation code
 		return bankOperation.OperationInfo0;
@@ -57,6 +94,28 @@ public class AccountProcessor
 	private decimal CalculateOperation3(ITotalAmount bankOperation)
 	{
 		// Some calculation code
+		return bankOperation.TotalAmount;
+	}
+
+
+	private decimal CalculateOperationPerformed(ref BankOperation bankOperation)
+	{
+		//Some calculation code
+		return bankOperation.OperationInfo0;
+	}
+	private decimal CalculateOperation1Performed(ref BankOperation bankOperation)
+	{
+        //Some calculation code
+        return bankOperation.OperationInfo1;
+	}
+	private decimal CalculateOperation2Performed(ref BankOperation bankOperation)
+	{
+		//Some calculation code
+		return bankOperation.OperationInfo2;
+	}
+	private decimal CalculateOperation3Performed(ref ITotalAmount bankOperation)
+	{
+		//Some calculation code
 		return bankOperation.TotalAmount;
 	}
 }
