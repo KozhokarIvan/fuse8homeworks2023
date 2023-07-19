@@ -39,14 +39,20 @@ public class Money
     public int Kopeks { get; }
     public static Money operator +(Money left, Money right)
     {
-        int totalKopeks = left.TotalKopeks + right.TotalKopeks;
-        return new Money(totalKopeks < 0, Math.Abs(totalKopeks / 100), Math.Abs(totalKopeks % 100));
+        checked
+        {
+        long totalKopeks = left.TotalKopeks + right.TotalKopeks;
+        return new Money(totalKopeks < 0, (int)Math.Abs(totalKopeks / 100), (int)Math.Abs(totalKopeks % 100));
+        }
     }
 
     public static Money operator -(Money left, Money right)
     {
-        int totalKopeks = left.TotalKopeks - right.TotalKopeks;
-        return new Money(totalKopeks < 0, Math.Abs(totalKopeks / 100), Math.Abs(totalKopeks % 100));
+        checked
+        {
+            long totalKopeks = left.TotalKopeks - right.TotalKopeks;
+            return new Money(totalKopeks < 0, (int)Math.Abs(totalKopeks / 100), (int)Math.Abs(totalKopeks % 100));
+        }
     }
     public static bool operator >(Money left, Money right)
     {
@@ -78,5 +84,5 @@ public class Money
     /// <summary>
     /// Количество копеек в сумме с  рублям конвертированными в копейки. Отрицательное значение если IsNegative true
     /// </summary>
-    private int TotalKopeks { get => (Kopeks + Rubles * 100) * (IsNegative ? -1 : 1); }
+    private long TotalKopeks { get => (Kopeks + Rubles * 100) * (IsNegative ? -1 : 1); }
 }
