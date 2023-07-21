@@ -7,9 +7,9 @@ using Fuse8_ByteMinds.SummerSchool.Domain;
 // В 2 из 25 сравнений способ без интернирования оказался быстрее на примерно 1/3.
 // Причем это первые 2 слова из 4 в выборке слов из начала словаря
 // В остальных случаях способ с интернированием оказался быстрее. В лучшем случае на 24%, в худшем на 14%
-BenchmarkRunner.Run<StringInternBenchmark>();
+//BenchmarkRunner.Run<StringInternBenchmark>();
 
-//BenchmarkRunner.Run<AccountProcessorBenchmark>();
+BenchmarkRunner.Run<AccountProcessorBenchmark>();
 
 [MemoryDiagnoser(displayGenColumns: true)]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
