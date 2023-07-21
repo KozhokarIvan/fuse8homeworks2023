@@ -3,6 +3,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using BenchmarkDotNet.Running;
 using Fuse8_ByteMinds.SummerSchool.Domain;
+using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 
 // В 2 из 25 сравнений способ без интернирования оказался быстрее на примерно 1/3.
 // Причем это первые 2 слова из 4 в выборке слов из начала словаря
@@ -91,6 +92,11 @@ public class StringInternBenchmark
 }
 
 
+
+//| Method                | Mean      | Error    | StdDev   | Ratio  | Rank      | Gen0        | Allocated  | Alloc Ratio  |
+//| -------------------   | ---------:| --------:| --------:| ------:| -----:    | -------    :| ----------:| ------------:|
+//| BenchmarkPerformed    | 285.8 ns  | 2.47 ns  | 2.31 ns  | 0.47   | 1         | -           | -          | 0.00         |
+//| Benchmark             | 603.6 ns  | 6.48 ns  | 6.06 ns  | 1.00   | 2         | 0.4015      | 6720 B     | 1.00         |
 [MemoryDiagnoser(displayGenColumns: true)]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [RankColumn]
