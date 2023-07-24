@@ -11,7 +11,10 @@ public static class BankCardHelpers
 	/// <returns>Номер карты без маски</returns>
 	public static string GetUnmaskedCardNumber(BankCard card)
 	{
-		// TODO С помощью рефлексии получить номер карты без маски
-		return card.MaskedCardNumber;
+		string nameOfField = "_number";
+        FieldInfo? unmaskedCardNumberField = typeof(BankCard).GetField(nameOfField, BindingFlags.Instance | BindingFlags.NonPublic);
+		string? unmaskedCardNumber = unmaskedCardNumberField?.GetValue(card) as string;
+		if (unmaskedCardNumber is null) throw new NullReferenceException($"No property named {nameOfField} in class {nameof(BankCard)}");
+        return unmaskedCardNumber;
 	}
 }
