@@ -19,9 +19,19 @@ public static class AssemblyHelpers
 			!.DefinedTypes
 			.Where(p => p.IsClass);
 
-		// TODO Добавить реализацию
-		throw new NotImplementedException();
-	}
+		var inheritorClasses = assemblyClassTypes
+			.Where(c => GetBaseType(c) is not null && !c.IsAbstract);
+
+        var baseClassesWithInheritors = assemblyClassTypes
+            .Where(c => GetBaseType(c) is null && inheritorClasses.Any(ic => GetBaseType(ic).FullName== c.FullName));
+
+		var typesWithInheritors = baseClassesWithInheritors
+			.Select(c => (c.Name, inheritorClasses.Count(ic => GetBaseType(ic).FullName == c.FullName)))
+			.ToArray();
+
+
+		return typesWithInheritors;
+    }
 
 	/// <summary>
 	/// Получает базовый тип для класса
