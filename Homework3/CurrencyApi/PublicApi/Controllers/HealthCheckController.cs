@@ -31,7 +31,7 @@ public class HealthCheckController : ControllerBase
     {
         var checkedOn = DateTimeOffset.Now;
         CheckStatus status;
-        if (checkExternalApi is not null && checkExternalApi == true)
+        if (checkExternalApi == true)
             status = await _currencyService.CheckHealth() ? CheckStatus.Ok : CheckStatus.Failed;
         else
             status = CheckStatus.Ok;

@@ -5,6 +5,7 @@ using Fuse8_ByteMinds.SummerSchool.PublicApi.Filters;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Middleware;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Options;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Services;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -64,24 +65,23 @@ public class Startup
         services.AddTransient<RequestLoggingMiddleware>();
         var section = _configuration.GetSection(CurrencyApiSettings.CurrencyApiName);
         services.Configure<CurrencyApiSettings>(section);
-        services.AddHttpClient(
-            CurrencyApiSettings.CurrencyApiName, config =>
-            {
-                config.BaseAddress =
-                    new Uri(_configuration["CurrencyApi:Uri"]
-                    ??
-                    throw new NullReferenceException("You must set external currency API uri in configuration as 'CurrencyApi:Uri'"));
-                config.DefaultRequestHeaders.Add("apikey", _configuration["CurrencyAPI:ApiKey"]
-                    ??
-                    throw new NullReferenceException("You must set external currency API key in configuration as 'CurrencyApi:ApiKey'"));
-            })
+        services
+            .AddHttpClient<CurrencyService>((provider, client) =>
+                {
+                    using (var scope = provider.CreateScope())
+                    {
+                        var apiSettings = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<CurrencyApiSettings>>().Value;
+                        client.BaseAddress = new Uri(apiSettings.Uri);
+                        client.DefaultRequestHeaders.Add("apikey", apiSettings.ApiKey);
+                    }
+                })
             .AddAuditHandler(audit =>
                 audit
-                    .IncludeRequestBody()
-                    .IncludeRequestHeaders()
-                    .IncludeResponseBody()
-                    .IncludeResponseHeaders()
-                    .IncludeContentHeaders());
+                .IncludeRequestBody()
+                .IncludeRequestHeaders()
+                .IncludeResponseBody()
+                .IncludeResponseHeaders()
+                .IncludeContentHeaders());
         Configuration.Setup()
             .UseSerilog(config =>
                 config
