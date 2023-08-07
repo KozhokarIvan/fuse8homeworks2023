@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PublicApi</name>
+    </assembly>
+    <members>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.CurrencyResponse.Code">
+            <summary>
+            Код валюты
+            </summary>
+            <example>RUB</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.CurrencyResponse.Value">
+            <summary>
+            Курс валюты относительно базовой валюты
+            </summary>
+            <example>70.23</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.CurrencyWithDateResponse.Date">
+            <summary>
+            День для которого был получен курс
+            </summary>
+            <example>2023-03-03</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.CurrencyWithDateResponse.Code">
+            <summary>
+            Код валюты
+            </summary>
+            <example>RUB</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.CurrencyWithDateResponse.Value">
+            <summary>
+            Курс валюты относительно базовой валюты
+            </summary>
+            <example>70.23</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.SettingsResponse.DefaultCurrency">
+            <summary>
+            Валюта для которой нужно получить курс относительно базовой
+            </summary>
+            <example>RUB</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.SettingsResponse.BaseCurrency">
+            <summary>
+            Базовая валюта
+            </summary>
+            <example>USD</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.SettingsResponse.RequestLimit">
+            <summary>
+            Максимальное количество запросов за месяц
+            </summary>
+            <example>300</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.SettingsResponse.RequestCount">
+            <summary>
+            Использованное количество запросов в этом месяце
+            </summary>
+            <example>111</example>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.SettingsResponse.CurrencyRoundCount">
+            <summary>
+            Точность округления курса
+            </summary>
+            <example>2</example>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController">
+            <summary>
+            Методы для работы с PublicApi
+            </summary>
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetDefaultCurrency">
+            <summary>
+            Получает курс валюты относительно базового. Базовый курс, курс валюты и точность округления извлекаются из параметров по умолчанию
+            </summary>
+            <response code="200">Возвращает при успешном получении курса</response>
+            <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
+            <response code="500">Возвращает при возникновении необработанной ошибки</response>
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetCurrencyByCode(System.String)">
+            <summary>
+            Получает курс валюты относительно базового. Базовый курс и точность округления извлекаются из параметров по умолчанию
+            </summary>
+            <param name="currencyCode">Валюта для которой нужно получить курс</param>
+            <response code="200">Возвращает при успешном получении курса</response>
+            <response code="404">Возвращает при попытке получить курс для неизвестной валюты</response>
+            <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
+            <response code="500">Возвращает при возникновении необработанной ошибки</response>
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetCurrencyByCodeAndDate(System.String,System.String)">
+            <summary>
+            Получает курс валюты относительно базового для заданной даты. Базовый курс и точность округления извлекаются из параметров по умолчанию
+            </summary>
+            <param name="currencyCode">Валюта для которой нужно получить курс</param>
+            <param name="date">Дата для которой требуется получить курс</param>
+            <response code="200">Возвращает при успешном получении курса</response>
+            <response code="400">Возвращает при запросе курса с форматом даты отличным от 'yyyy-MM-dd'</response>
+            <response code="404">Возвращает при попытке получить курс для неизвестной валюты</response>
+            <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
+            <response code="500">Возвращает при возникновении необработанной ошибки</response>
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetSettings">
+            <summary>
+            Получает настройки 
+            </summary>
+            <response code="200">Возвращает при успешном получении настроек</response>
+            <response code="500">Возвращает при возникновении необработанной ошибки</response>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckController">
+            <summary>
+            Методы для проверки работоспособности PublicApi
+            </summary>
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckController.Check(System.Nullable{System.Boolean})">
+            <summary>
+            Проверить что API работает
+            </summary>
+            <param name="checkExternalApi">Необходимо проверить работоспособность внешнего API. Если FALSE или NULL - проверяется работоспособность только текущего API</param>
+            <response code="200">
+            Возвращает если удалось получить доступ к API
+            </response>
+            <response code="400">
+            Возвращает если удалось не удалось получить доступ к API
+            </response>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckResult">
+            <summary>
+            Результат проверки работоспособности API
+            </summary>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckResult.CheckedOn">
+            <summary>
+            Дата проверки
+            </summary>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckResult.Status">
+            <summary>
+            Статус работоспособности API
+            </summary>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckResult.CheckStatus">
+            <summary>
+            Статус API
+            </summary>
+        </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckResult.CheckStatus.Ok">
+            <summary>
+            API работает
+            </summary>
+        </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckResult.CheckStatus.Failed">
+            <summary>
+            Ошибка в работе API
+            </summary>
+        </member>
+    </members>
+</doc>
