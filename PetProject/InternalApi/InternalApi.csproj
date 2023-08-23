@@ -4,10 +4,9 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>Fuse8_ByteMinds.SummerSchool.PublicApi</RootNamespace>
+		<RootNamespace>Fuse8_ByteMinds.SummerSchool.InternalApi</RootNamespace>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<DocumentationFile>$(AssemblyName).xml</DocumentationFile>
-		<NoWarn>$(NoWarn);1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,26 +14,16 @@
 		<PackageReference Include="Audit.NET.Serilog" Version="21.0.3" />
 		<PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
 		<PackageReference Include="Grpc.Tools" Version="2.57.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
 		<PackageReference Include="Serilog" Version="3.0.1" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<Protobuf Include="Grpc/CustomTypes/CustomTypes.proto" GrpcServices="Client"></Protobuf>
-		<Protobuf Include="Grpc/Protos/CurrencyApi.proto" GrpcServices="Client" AdditionalImportDirs="Grpc/CustomTypes"></Protobuf>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="Grpc\CustomTypes\CustomTypes.proto">
-	    <GrpcServices>Server</GrpcServices>
-	  </None>
-	  <None Update="Grpc\Protos\CurrencyApi.proto">
-	    <GrpcServices>Server</GrpcServices>
-	    <AdditionalImportDirs>Grpc/CustomTypes</AdditionalImportDirs>
-	  </None>
+		<Protobuf Include="Grpc/CustomTypes/CustomTypes.proto" GrpcServices="Server"></Protobuf>
+		<Protobuf Include="Grpc/Protos/CurrencyApi.proto" GrpcServices="Server" AdditionalImportDirs="Grpc/CustomTypes"></Protobuf>
 	</ItemGroup>
 
 </Project>

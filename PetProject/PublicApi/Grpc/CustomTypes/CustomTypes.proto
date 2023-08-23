@@ -1,0 +1,8 @@
+syntax = "proto3";
+package CustomTypes;
+option csharp_namespace = "Fuse8_ByteMinds.SummerSchool.PublicApi.Grpc.CustomTypes";
+
+message DecimalValue {
+    int64 units = 1;
+    sfixed32 nanos = 2;
+}

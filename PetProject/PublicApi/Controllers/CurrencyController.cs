@@ -79,7 +79,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
             bool isDateValid = DateOnly.TryParseExact(date, "yyyy-MM-dd", out var parsedDate);
             if (!isDateValid)
                 return BadRequest($"Expected date format: 'yyyy-MM-dd', received date: '{date}'");
-            decimal value = await _currencyService.GetCurrencyByCodeAndDate(currencyCode, parsedDate);
+            decimal value = await _currencyService.GetCurrencyOnDate(currencyCode, parsedDate);
             var response = new CurrencyWithDateResponse
             {
                 Date = parsedDate,
@@ -98,14 +98,13 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         [HttpGet("/settings")]
         public async Task<IActionResult> GetSettings()
         {
-            (int requestCount, int requestLimit) = await _currencyService.GetRequestQuotas();
+            (string baseCurrency, bool canRequest) = await _currencyService.GetRequestQuotas();
             var settings = new SettingsResponse()
             {
                 DefaultCurrency = _currencyOptions.Value.Currency,
-                BaseCurrency = _currencyOptions.Value.BaseCurrency,
-                CurrencyRoundCount = _currencyOptions.Value.DecimalPlaces,
-                RequestCount = requestCount,
-                RequestLimit = requestLimit
+                BaseCurrency = baseCurrency,
+                NewRequestsAvailable = canRequest,
+                CurrencyRoundCount = _currencyOptions.Value.DecimalPlaces
             };
             return Ok(settings);
         }
