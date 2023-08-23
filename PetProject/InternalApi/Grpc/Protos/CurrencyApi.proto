@@ -1,0 +1,39 @@
+syntax = "proto3";
+option csharp_namespace = "Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "CustomTypes.proto";
+
+service GrpcCurrency {
+    rpc GetCurrentCurrency(GetCurrentCurrencyRequest) returns (GetCurrencyResponse); 
+    rpc GetCurrentCurrencyOnDate(GetCurrentCurrencyOnDateRequest) returns(GetCurrencyResponse);
+    rpc GetSettings(google.protobuf.Empty) returns (GetSettingsResponse);
+}
+
+message GetCurrentCurrencyRequest {
+    string currency_code = 1;
+}
+
+message GetCurrentCurrencyOnDateRequest {
+    string currency_code = 1;
+    google.protobuf.Timestamp date = 2;
+}
+
+message GetCurrencyResponse {
+    StatusCodes status_code = 1;
+    string currency_code = 2;
+    CustomTypes.DecimalValue value = 3;
+}
+
+message GetSettingsResponse {
+    StatusCodes status_code = 1;
+    string base_currency_code = 2;
+    bool can_request = 3;
+}
+
+enum StatusCodes{
+    STATUS_CODES_NO_ERROR = 0;
+    STATUS_CODES_UNKNOWN_CURRENCY = 1;
+    STATUS_CODES_NO_REQUESTS_LEFT = 2;
+}

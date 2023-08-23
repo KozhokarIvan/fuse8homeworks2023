@@ -2,6 +2,7 @@
 using Audit.Core;
 using Audit.Http;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Filters;
+using Fuse8_ByteMinds.SummerSchool.PublicApi.Grpc.Contracts;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Middleware;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Options;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Services;
@@ -98,6 +99,12 @@ public class Startup
                         }
                         return auditEvent.ToJson();
                     }));
+        services
+            .AddGrpcClient<GrpcCurrency.GrpcCurrencyClient>(o =>
+                {
+                    o.Address = new Uri(_configuration.GetValue<string>("GrpcUri"));
+                })
+            .AddAuditHandler(audit => audit.IncludeRequestBody());
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

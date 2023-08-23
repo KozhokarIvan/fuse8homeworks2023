@@ -1,8 +1,8 @@
 ﻿using System.Net;
-using System.Text.Json;
-using Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.ExternalCurrencyApi;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Exceptions;
+using Fuse8_ByteMinds.SummerSchool.PublicApi.Grpc.Contracts;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Options;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.Options;
 
 namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Services
@@ -10,10 +10,12 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Services
     public class CurrencyService
     {
         private readonly HttpClient _httpClient;
+        private readonly GrpcCurrency.GrpcCurrencyClient _grpcClient;
         private readonly IOptionsSnapshot<CurrencyApiSettings> _options;
-        public CurrencyService(HttpClient httpClient, IOptionsSnapshot<CurrencyApiSettings> options)
+        public CurrencyService(HttpClient httpClient, GrpcCurrency.GrpcCurrencyClient grpcClient, IOptionsSnapshot<CurrencyApiSettings> options)
         {
             _httpClient = httpClient;
+            _grpcClient = grpcClient;
             _options = options;
         }
         public async Task<bool> CheckHealth()
@@ -23,66 +25,70 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Services
         }
         public async Task<(string code, decimal value)> GetDefaultCurrency()
         {
-            var response = await _httpClient.GetAsync($"latest?currencies={_options.Value.Currency}&base_currency={_options.Value.BaseCurrency}");
-            var responseString = await response.Content.ReadAsStringAsync();
-            var jsonSerializerOptions = new JsonSerializerOptions
+            var grpcResponse = await _grpcClient.GetCurrentCurrencyAsync(new Grpc.Contracts.GetCurrentCurrencyRequest()
             {
-                PropertyNameCaseInsensitive = true,
-            };
-            var latestResponse = JsonSerializer.Deserialize<LatestResponse>(responseString, jsonSerializerOptions);
-            if (latestResponse is null)
-                throw new NullReferenceException();
-            var value = decimal.Round(latestResponse.Data[_options.Value.Currency].Value, _options.Value.DecimalPlaces);
-            return (latestResponse.Data[_options.Value.Currency].Code, value);
+                CurrencyCode = _options.Value.Currency
+            });
+            switch (grpcResponse.StatusCode)
+            {
+                case Grpc.Contracts.StatusCodes.NoError:
+                    var value = decimal.Round(grpcResponse.Value, _options.Value.DecimalPlaces);
+                    return (grpcResponse.CurrencyCode, value);
+                case Grpc.Contracts.StatusCodes.UnknownCurrency:
+                    throw new CurrencyNotFoundException(_options.Value.Currency);
+                case Grpc.Contracts.StatusCodes.NoRequestsLeft:
+                    throw new ApiRequestLimitException();
+                default:
+                    throw new Exception("Unknown status code returned from grpc service");
+            }
         }
         public async Task<(string code, decimal value)> GetCurrencyByCode(string currencyCode)
         {
-            var response = await _httpClient
-               .GetAsync($"latest?currencies={currencyCode}&base_currency={_options.Value.BaseCurrency}");
-            bool currencyDoesNotExist = response.StatusCode == HttpStatusCode.UnprocessableEntity;
-            if (currencyDoesNotExist)
-                throw new CurrencyNotFoundException(currencyCode);
-            var responseString = await response.Content.ReadAsStringAsync();
-            var jsonSerializerOptions = new JsonSerializerOptions
+            var grpcResponse = await _grpcClient.GetCurrentCurrencyAsync(new GetCurrentCurrencyRequest()
             {
-                PropertyNameCaseInsensitive = true,
-            };
-            var latestResponse = JsonSerializer.Deserialize<LatestResponse>(responseString, jsonSerializerOptions);
-            if (latestResponse is null)
-                throw new NullReferenceException();
-            var value = decimal.Round(latestResponse.Data[currencyCode].Value, _options.Value.DecimalPlaces);
-            return (latestResponse.Data[currencyCode].Code, value);
+                CurrencyCode = currencyCode
+            });
+            switch (grpcResponse.StatusCode)
+            {
+                case Grpc.Contracts.StatusCodes.NoError:
+                    var value = decimal.Round(grpcResponse.Value, _options.Value.DecimalPlaces);
+                    return (grpcResponse.CurrencyCode, value);
+                case Grpc.Contracts.StatusCodes.UnknownCurrency:
+                    throw new CurrencyNotFoundException(_options.Value.Currency);
+                case Grpc.Contracts.StatusCodes.NoRequestsLeft:
+                    throw new ApiRequestLimitException();
+                default:
+                    throw new Exception("Unknown status code returned from grpc service");
+            }
         }
-        public async Task<decimal> GetCurrencyByCodeAndDate(string currencyCode, DateOnly date)
+        public async Task<decimal> GetCurrencyOnDate(string currencyCode, DateOnly date)
         {
-            var response = await _httpClient
-                .GetAsync($"historical?currencies={currencyCode}&date={date.ToString("yyyy-MM-dd")}&base_currency={_options.Value.BaseCurrency}");
-            bool currencyDoesNotExist = response.StatusCode == HttpStatusCode.UnprocessableEntity;
-            if (currencyDoesNotExist)
-                throw new CurrencyNotFoundException(currencyCode);
-            var responseString = await response.Content.ReadAsStringAsync();
-            var jsonSerializerOptions = new JsonSerializerOptions
+            Timestamp protoTimestamp = Timestamp.FromDateTime(
+                DateTime.SpecifyKind(new DateTime(date.Year, date.Month, date.Day),
+                DateTimeKind.Utc));
+            var grpcResponse = await _grpcClient.GetCurrentCurrencyOnDateAsync(new GetCurrentCurrencyOnDateRequest
             {
-                PropertyNameCaseInsensitive = true,
-            };
-            var currencyResponse = JsonSerializer.Deserialize<HistoricalResponse>(responseString, jsonSerializerOptions);
-            if (currencyResponse is null)
-                throw new NullReferenceException();
-            var value = decimal.Round(currencyResponse.Data[currencyCode].Value, _options.Value.DecimalPlaces);
-            return value;
+                CurrencyCode = currencyCode,
+                Date = protoTimestamp
+            });
+
+            switch (grpcResponse.StatusCode)
+            {
+                case Grpc.Contracts.StatusCodes.NoError:
+                    var value = decimal.Round(grpcResponse.Value, _options.Value.DecimalPlaces);
+                    return value;
+                case Grpc.Contracts.StatusCodes.UnknownCurrency:
+                    throw new CurrencyNotFoundException(_options.Value.Currency);
+                case Grpc.Contracts.StatusCodes.NoRequestsLeft:
+                    throw new ApiRequestLimitException();
+                default:
+                    throw new Exception("Unknown status code returned from grpc service");
+            }
         }
-        public async Task<(int requestCount, int requestLimit)> GetRequestQuotas()
+        public async Task<(string baseCurrency, bool canRequest)> GetRequestQuotas()
         {
-            var response = await _httpClient.GetAsync("status");
-            var responseString = await response.Content.ReadAsStringAsync();
-            var jsonSerializerOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-            };
-            var statusResponse = JsonSerializer.Deserialize<StatusResponse>(responseString, jsonSerializerOptions);
-            if (statusResponse is null)
-                throw new NullReferenceException();
-            return (statusResponse.Quotas.Month.Used, statusResponse.Quotas.Month.Total);
+            var grpcResponse = await _grpcClient.GetSettingsAsync(new Empty());
+            return (grpcResponse.BaseCurrencyCode, grpcResponse.CanRequest);
         }
     }
 }

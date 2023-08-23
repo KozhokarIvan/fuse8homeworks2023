@@ -13,15 +13,10 @@
         /// <example>USD</example>
         public string BaseCurrency { get; init; } = string.Empty;
         /// <summary>
-        /// Максимальное количество запросов за месяц
+        /// Есть ли еще доступные запросы
         /// </summary>
-        /// <example>300</example>
-        public int RequestLimit { get; init; }
-        /// <summary>
-        /// Использованное количество запросов в этом месяце
-        /// </summary>
-        /// <example>111</example>
-        public int RequestCount { get; init; }
+        /// <example>true</example>
+        public bool NewRequestsAvailable { get; init; }
         /// <summary>
         /// Точность округления курса
         /// </summary>
