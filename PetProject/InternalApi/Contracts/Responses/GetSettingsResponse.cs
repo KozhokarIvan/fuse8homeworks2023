@@ -6,7 +6,7 @@
         /// Валюта для которой нужно получить курс относительно базовой
         /// </summary>
         /// <example>RUB</example>
-        public CurrencyCode BaseCurrency { get; init; }
+        public string BaseCurrency { get; init; } = string.Empty;
 
         /// <summary>
         /// Доступны ли еще запросы

@@ -2,6 +2,6 @@
 {
     public class Quotas
     {
-        public Quota Month { get; init; }
+        public Quota Month { get; init; } = null!;
     }
 }

@@ -1,20 +1,24 @@
 using Fuse8_ByteMinds.SummerSchool.InternalApi;
-using Microsoft.AspNetCore;
 
-var webHost = WebHost
+var host = Host
     .CreateDefaultBuilder(args)
-    .UseKestrel((builderContext, options) =>
+    .ConfigureWebHostDefaults(
+    webBuilder =>
     {
-        var grpcPort = builderContext.Configuration.GetValue<int>("GrpcPort");
-        options.ConfigureEndpointDefaults(
-            p =>
-            {
-                p.Protocols = p.IPEndPoint!.Port == grpcPort
-                ? Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2
-                : Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1;
-            });
+        webBuilder
+        .UseKestrel((builderContext, options) =>
+        {
+            var grpcPort = builderContext.Configuration.GetValue<int>("GrpcPort");
+            options.ConfigureEndpointDefaults(
+                p =>
+                {
+                    p.Protocols = p.IPEndPoint!.Port == grpcPort
+                    ? Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2
+                    : Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1;
+                });
+        })
+        .UseStartup<Startup>();
     })
-    .UseStartup<Startup>()
     .Build();
 
-await webHost.RunAsync();
+await host.RunAsync();

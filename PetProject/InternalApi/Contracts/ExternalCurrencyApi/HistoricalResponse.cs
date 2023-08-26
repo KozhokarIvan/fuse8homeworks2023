@@ -2,7 +2,7 @@
 {
     public class HistoricalResponse
     {
-        public Meta Meta { get; init; }
-        public Dictionary<string, Currency> Data { get; init; }
+        public Meta Meta { get; init; } = null!;
+        public Dictionary<string, Currency> Data { get; init; } = null!;
     }
 }

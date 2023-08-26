@@ -1,9 +1,11 @@
 using Fuse8_ByteMinds.SummerSchool.PublicApi;
-using Microsoft.AspNetCore;
 
-var webHost = WebHost
+var host = Host
     .CreateDefaultBuilder(args)
-    .UseStartup<Startup>()
+    .ConfigureWebHostDefaults(webHost =>
+    {
+        webHost.UseStartup<Startup>();
+    })
     .Build();
 
-await webHost.RunAsync();
+await host.RunAsync();

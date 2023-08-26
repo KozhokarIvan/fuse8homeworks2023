@@ -4,62 +4,11 @@
         <name>InternalApi</name>
     </assembly>
     <members>
-        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrenciesOnDate">
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests.CurrencyCode">
             <summary>
-            Курсы валют на конкретную дату
+            Код валюты
             </summary>
-            <param name="LastUpdatedAt">Дата обновления данных</param>
-            <param name="Currencies">Список курсов валют</param>
-        </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrenciesOnDate.#ctor(System.DateTime,Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Currency[])">
-            <summary>
-            Курсы валют на конкретную дату
-            </summary>
-            <param name="LastUpdatedAt">Дата обновления данных</param>
-            <param name="Currencies">Список курсов валют</param>
-        </member>
-        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrenciesOnDate.LastUpdatedAt">
-            <summary>Дата обновления данных</summary>
-        </member>
-        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrenciesOnDate.Currencies">
-            <summary>Список курсов валют</summary>
-        </member>
-        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Currency">
-            <summary>
-            Курс валюты
-            </summary>
-            <param name="Code">Код валюты</param>
-            <param name="Value">Значение курса валют, относительно базовой валюты</param>
-        </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Currency.#ctor(System.String,System.Decimal)">
-            <summary>
-            Курс валюты
-            </summary>
-            <param name="Code">Код валюты</param>
-            <param name="Value">Значение курса валют, относительно базовой валюты</param>
-        </member>
-        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Currency.Code">
-            <summary>Код валюты</summary>
-        </member>
-        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Currency.Value">
-            <summary>Значение курса валют, относительно базовой валюты</summary>
-        </member>
-        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrencyDTO">
-            <summary>
-            Курс валюты
-            </summary>
-            <param name="currencyCode">Валюта</param>
-            <param name="Value">Значение курса</param>
-        </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrencyDTO.#ctor(Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrencyCode,System.Decimal)">
-            <summary>
-            Курс валюты
-            </summary>
-            <param name="currencyCode">Валюта</param>
-            <param name="Value">Значение курса</param>
-        </member>
-        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrencyDTO.Value">
-            <summary>Значение курса</summary>
+            <example>RUB</example>
         </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests.GetCurrencyRequest.CurrencyType">
             <summary>
@@ -67,13 +16,13 @@
             </summary>
             <example>RUB</example>
         </member>
-        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Responses.CurrencyResponse.Code">
+        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Responses.GetCurrencyResponse.Code">
             <summary>
             Код валюты
             </summary>
             <example>RUB</example>
         </member>
-        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Responses.CurrencyResponse.Value">
+        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Responses.GetCurrencyResponse.Value">
             <summary>
             Курс валюты относительно базовой валюты
             </summary>
@@ -162,6 +111,21 @@
         <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetCurrentCurrencyOnDateRequest.DateFieldNumber">
             <summary>Field number for the "date" field.</summary>
         </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetFavoriteCurrencyRequest.FavoriteCurrencyFieldNumber">
+            <summary>Field number for the "favorite_currency" field.</summary>
+        </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetFavoriteCurrencyRequest.FavoriteCurrencyBaseFieldNumber">
+            <summary>Field number for the "favorite_currency_base" field.</summary>
+        </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetFavoriteCurrencyOnDateRequest.FavoriteCurrencyFieldNumber">
+            <summary>Field number for the "favorite_currency" field.</summary>
+        </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetFavoriteCurrencyOnDateRequest.FavoriteCurrencyBaseFieldNumber">
+            <summary>Field number for the "favorite_currency_base" field.</summary>
+        </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetFavoriteCurrencyOnDateRequest.DateFieldNumber">
+            <summary>Field number for the "date" field.</summary>
+        </member>
         <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetCurrencyResponse.StatusCodeFieldNumber">
             <summary>Field number for the "status_code" field.</summary>
         </member>
@@ -180,6 +144,12 @@
         <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetSettingsResponse.CanRequestFieldNumber">
             <summary>Field number for the "can_request" field.</summary>
         </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetFavoriteCurrencyResponse.StatusCodeFieldNumber">
+            <summary>Field number for the "status_code" field.</summary>
+        </member>
+        <member name="F:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GetFavoriteCurrencyResponse.ValueFieldNumber">
+            <summary>Field number for the "value" field.</summary>
+        </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts.GrpcCurrency.Descriptor">
             <summary>Service descriptor</summary>
         </member>
@@ -196,7 +166,7 @@
             <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
             <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICachedCurrencyAPI.GetCurrentCurrencyAsync(Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrencyCode,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICachedCurrencyAPI.GetCurrentCurrencyAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Получает текущий курс
             </summary>
@@ -204,7 +174,7 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Текущий курс</returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICachedCurrencyAPI.GetCurrencyOnDateAsync(Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.CurrencyCode,System.DateOnly,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICachedCurrencyAPI.GetCurrencyOnDateAsync(System.String,System.DateOnly,System.Threading.CancellationToken)">
             <summary>
             Получает курс валюты, актуальный на <paramref name="date"/>
             </summary>
@@ -229,6 +199,82 @@
             <param name="date">Дата, на которую нужно получить курс валют</param>
             <param name="cancellationToken">Токен отмены</param>
             <returns>Список курсов валют на дату</returns>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.Init">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.Init.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.Init.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.Init.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialTables">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialTables.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialTables.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialTables.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialCurrencyCodes">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialCurrencyCodes.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialCurrencyCodes.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialCurrencyCodes.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.CurrenciesOnDate">
+            <summary>
+            Курсы валют на конкретную дату
+            </summary>
+            <param name="LastUpdatedAt">Дата обновления данных</param>
+            <param name="Currencies">Список курсов валют</param>
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.CurrenciesOnDate.#ctor(System.DateTime,Fuse8_ByteMinds.SummerSchool.InternalApi.Models.Currency[])">
+            <summary>
+            Курсы валют на конкретную дату
+            </summary>
+            <param name="LastUpdatedAt">Дата обновления данных</param>
+            <param name="Currencies">Список курсов валют</param>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.CurrenciesOnDate.LastUpdatedAt">
+            <summary>Дата обновления данных</summary>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.CurrenciesOnDate.Currencies">
+            <summary>Список курсов валют</summary>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.Currency">
+            <summary>
+            Курс валюты
+            </summary>
+            <param name="Code">Код валюты</param>
+            <param name="Value">Значение курса валют, относительно базовой валюты</param>
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.Currency.#ctor(System.String,System.Decimal)">
+            <summary>
+            Курс валюты
+            </summary>
+            <param name="Code">Код валюты</param>
+            <param name="Value">Значение курса валют, относительно базовой валюты</param>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.Currency.Code">
+            <summary>Код валюты</summary>
+        </member>
+        <member name="P:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.Currency.Value">
+            <summary>Значение курса валют, относительно базовой валюты</summary>
         </member>
     </members>
 </doc>

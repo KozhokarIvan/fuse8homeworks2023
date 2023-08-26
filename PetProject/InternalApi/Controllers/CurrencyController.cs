@@ -1,5 +1,4 @@
-﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests;
+﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Responses;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Exceptions;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
@@ -17,11 +16,11 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
     {
         private readonly ICachedCurrencyAPI _cachedCurrencyAPI;
         private readonly ICurrencySettingsApi _currencySettingsApi;
-        private readonly IOptionsSnapshot<CurrencyApiSettings> _options;
+        private readonly IOptionsSnapshot<InternalApiSettings> _options;
         public CurrencyController(
             ICachedCurrencyAPI cachedCurrencyAPI,
             ICurrencySettingsApi currencySettingsApi,
-            IOptionsSnapshot<CurrencyApiSettings> options)
+            IOptionsSnapshot<InternalApiSettings> options)
         {
             _cachedCurrencyAPI = cachedCurrencyAPI;
             _currencySettingsApi = currencySettingsApi;
@@ -35,12 +34,18 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         /// <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [HttpGet]
+        [ProducesResponseType(typeof(GetCurrencyResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCurrencyByCode(GetCurrencyRequest request)
         {
-            CancellationToken token = HttpContext.RequestAborted;
+            CancellationToken cancellationToken = HttpContext.RequestAborted;
             try
             {
-                var response = await _cachedCurrencyAPI.GetCurrentCurrencyAsync(request.CurrencyType, token);
+                var result = await _cachedCurrencyAPI.GetCurrentCurrencyAsync(request.CurrencyType.ToString(), cancellationToken);
+                var response = new GetCurrencyResponse
+                {
+                    Code = result.Code,
+                    Value = result.Value
+                };
                 return Ok(response);
             }
             catch (ApiRequestLimitException)
@@ -59,15 +64,17 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         /// <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [HttpGet("{date}")]
+        [ProducesResponseType(typeof(GetCurrencyResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCurrencyOnDate(GetCurrencyRequest request, string date)
         {
-            CancellationToken token = HttpContext.RequestAborted;
+            CancellationToken cancellationToken = HttpContext.RequestAborted;
             bool isDateValid = DateOnly.TryParseExact(date, "yyyy-MM-dd", out var parsedDate);
             if (!isDateValid)
-                return BadRequest($"Expected date format: 'yyyy-MM-dd', received date: '{date}'");
+                return BadRequest($"Ожидалась дата формата: 'yyyy-MM-dd', получена: '{date}'");
             try
             {
-                var response = await _cachedCurrencyAPI.GetCurrencyOnDateAsync(request.CurrencyType, parsedDate, token);
+                var result = await _cachedCurrencyAPI.GetCurrencyOnDateAsync(request.CurrencyType.ToString(), parsedDate, cancellationToken);
+                var response = new GetCurrencyResponse { Code = result.Code, Value = result.Value };
                 return Ok(response);
             }
             catch (ApiRequestLimitException)
@@ -82,13 +89,15 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         /// <response code="200">Возвращает при успешном получении настроек</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [HttpGet("settings")]
+        [ProducesResponseType(typeof(GetSettingsResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetSettings()
         {
-            (int requestCount, int requestLimit) = await _currencySettingsApi.GetRequestQuotas();
+            var cancellationToken = HttpContext.RequestAborted;
+            (int requestCount, int requestLimit) = await _currencySettingsApi.GetRequestQuotas(cancellationToken);
             var response = new GetSettingsResponse
             {
                 RequestsAvailable = requestCount <= requestLimit,
-                BaseCurrency = Enum.Parse<CurrencyCode>(_options.Value.BaseCurrency)
+                BaseCurrency = _options.Value.BaseCurrency
             };
             return Ok(response);
         }
