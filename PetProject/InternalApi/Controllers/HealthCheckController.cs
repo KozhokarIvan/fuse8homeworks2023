@@ -9,8 +9,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
     [Route("health")]
     public class HealthCheckController : ControllerBase
     {
-        private readonly IHealthCheckAPI _healthCheckAPI;
-        public HealthCheckController(IHealthCheckAPI healthCheckAPI)
+        private readonly IHealthCheckService _healthCheckAPI;
+        public HealthCheckController(IHealthCheckService healthCheckAPI)
         {
             _healthCheckAPI = healthCheckAPI;
         }
@@ -21,7 +21,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         /// <response code="503">Возвращает, при сбое в работе API</response>
         [HttpGet]
         public async Task<IActionResult> CheckHealth()
-        => await _healthCheckAPI.CheckHealth()
+        => await _healthCheckAPI.CheckHealth(HttpContext.RequestAborted)
                 ? Ok()
                 : new StatusCodeResult(StatusCodes.Status503ServiceUnavailable);
     }

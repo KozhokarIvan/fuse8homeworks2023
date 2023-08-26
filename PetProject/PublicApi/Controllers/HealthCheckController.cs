@@ -1,6 +1,7 @@
-﻿using Fuse8_ByteMinds.SummerSchool.PublicApi.Services;
+﻿using Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses;
+using Fuse8_ByteMinds.SummerSchool.PublicApi.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using static Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckResult;
+using static Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.HealthCheckResponse;
 
 namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers;
 
@@ -10,10 +11,10 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers;
 [Route("healthcheck")]
 public class HealthCheckController : ControllerBase
 {
-    private readonly CurrencyService _currencyService;
-    public HealthCheckController(CurrencyService currencyService)
+    private readonly IHealthCheckService _healthCheckService;
+    public HealthCheckController(IHealthCheckService healthCheckService)
     {
-        _currencyService = currencyService;
+        _healthCheckService = healthCheckService;
     }
 
     /// <summary>
@@ -27,47 +28,15 @@ public class HealthCheckController : ControllerBase
     /// Возвращает если удалось не удалось получить доступ к API
     /// </response>
     [HttpGet]
-    public async Task<HealthCheckResult> Check(bool? checkExternalApi)
+    public async Task<HealthCheckResponse> Check(bool? checkExternalApi)
     {
         var checkedOn = DateTimeOffset.Now;
         CheckStatus status;
         if (checkExternalApi == true)
-            status = await _currencyService.CheckHealth() ? CheckStatus.Ok : CheckStatus.Failed;
+            status = await _healthCheckService.CheckHealth() ? CheckStatus.Ok : CheckStatus.Failed;
         else
             status = CheckStatus.Ok;
-        var response = new HealthCheckResult { CheckedOn = checkedOn, Status = status };
+        var response = new HealthCheckResponse { CheckedOn = checkedOn, Status = status };
         return response;
-    }
-}
-
-/// <summary>
-/// Результат проверки работоспособности API
-/// </summary>
-public record HealthCheckResult
-{
-    /// <summary>
-    /// Дата проверки
-    /// </summary>
-    public DateTimeOffset CheckedOn { get; init; }
-
-    /// <summary>
-    /// Статус работоспособности API
-    /// </summary>
-    public CheckStatus Status { get; init; }
-
-    /// <summary>
-    /// Статус API
-    /// </summary>
-    public enum CheckStatus
-    {
-        /// <summary>
-        /// API работает
-        /// </summary>
-        Ok = 1,
-
-        /// <summary>
-        /// Ошибка в работе API
-        /// </summary>
-        Failed = 2,
     }
 }

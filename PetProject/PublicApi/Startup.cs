@@ -1,11 +1,16 @@
 ﻿using System.Text.Json.Serialization;
 using Audit.Core;
 using Audit.Http;
+using Fuse8_ByteMinds.SummerSchool.PublicApi.Data;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Filters;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Grpc.Contracts;
+using Fuse8_ByteMinds.SummerSchool.PublicApi.Interfaces.Repositories;
+using Fuse8_ByteMinds.SummerSchool.PublicApi.Interfaces.Services;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Middleware;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Options;
+using Fuse8_ByteMinds.SummerSchool.PublicApi.Repositories;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -53,28 +58,32 @@ public class Startup
             c.SwaggerDoc("v1",
                    new OpenApiInfo()
                    {
-                       Title = "Homework3",
+                       Title = "Public Currency Api",
                        Version = "v1",
-                       Description = "API that allows you to get currency exchange rate"
+                       Description = "API для работы с курсами валют"
                    });
             c.IncludeXmlComments(Path.Combine(
                 AppContext.BaseDirectory, $"{typeof(Program).Assembly.GetName().Name}.xml"),
                 includeControllerXmlComments: true
                 );
         });
-        services.AddTransient<CurrencyService>();
+        services.AddScoped<IFavoriteExchangesRepository, FavoriteExchangesRepository>();
+        services.AddScoped<ISettingsRepository, SettingsRepository>();
+        services.AddTransient<ICurrencyService>(provider => provider.GetRequiredService<CurrencyService>());
+        services.AddTransient<IHealthCheckService>(provider => provider.GetRequiredService<CurrencyService>());
+        services.AddTransient<IFavoriteExchangesService, FavoriteExchangesService>();
+        services.AddTransient<ISettingsService, SettingsService>();
         services.AddTransient<RequestLoggingMiddleware>();
-        var section = _configuration.GetSection(CurrencyApiSettings.CurrencyApiName);
-        services.Configure<CurrencyApiSettings>(section);
+
+        var section = _configuration.GetSection(PublicApiSettings.CurrencyApiName);
+        services.Configure<PublicApiSettings>(section);
         services
             .AddHttpClient<CurrencyService>((provider, client) =>
                 {
-                    using (var scope = provider.CreateScope())
-                    {
-                        var apiSettings = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<CurrencyApiSettings>>().Value;
-                        client.BaseAddress = new Uri(apiSettings.Uri);
-                        client.DefaultRequestHeaders.Add("apikey", apiSettings.ApiKey);
-                    }
+                    using var scope = provider.CreateScope();
+                    var apiSettings = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<PublicApiSettings>>().Value;
+                    client.BaseAddress = new Uri(apiSettings.Uri);
+                    client.DefaultRequestHeaders.Add("apikey", apiSettings.ApiKey);
                 })
             .AddAuditHandler(audit =>
                 audit
@@ -94,7 +103,7 @@ public class Startup
                             var contentBody = auditEventHttpClient.Action?.Response?.Content?.Body;
                             if (contentBody is string { Length: > 1000 } stringBody)
                             {
-                                auditEventHttpClient.Action.Response.Content.Body = stringBody[..1000] + "<...>";
+                                auditEventHttpClient.Action!.Response.Content.Body = stringBody[..1000] + "<...>";
                             }
                         }
                         return auditEvent.ToJson();
@@ -102,9 +111,22 @@ public class Startup
         services
             .AddGrpcClient<GrpcCurrency.GrpcCurrencyClient>(o =>
                 {
-                    o.Address = new Uri(_configuration.GetValue<string>("GrpcUri"));
+                    o.Address = new Uri(_configuration.GetValue<string>("GrpcUri")!);
                 })
             .AddAuditHandler(audit => audit.IncludeRequestBody());
+
+        string connectionString = _configuration.GetConnectionString(nameof(PublicApiDbContext))!;
+        services.AddDbContext<PublicApiDbContext>(options =>
+        {
+            options
+            .UseNpgsql(
+                connectionString: connectionString,
+                npgsqlOptionsAction: sqlOptionsBuilder =>
+                {
+                    sqlOptionsBuilder.EnableRetryOnFailure();
+                })
+            .UseSnakeCaseNamingConvention();
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

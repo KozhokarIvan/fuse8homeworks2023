@@ -2,6 +2,6 @@
 {
     public class CurrenciesResponse
     {
-        public Dictionary<string, Currency> Data { get; init; }
+        public Dictionary<string, Currency> Data { get; init; } = null!;
     }
 }

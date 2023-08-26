@@ -4,7 +4,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.ExternalCurrencyApi
 {
     public class Meta
     {
-        [JsonPropertyNameAttribute("last_updated_at")]
+        [JsonPropertyName("last_updated_at")]
         public DateTime LastUpdatedAt { get; init; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public class StatusResponse
     {
-        public Quotas Quotas { get; init; }
+        public Quotas Quotas { get; init; } = null!;
     }
 }

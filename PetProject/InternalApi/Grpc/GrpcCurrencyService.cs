@@ -1,5 +1,4 @@
-﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Exceptions;
+﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Exceptions;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces;
@@ -12,11 +11,11 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc
     {
         private readonly ICachedCurrencyAPI _cachedCurrencyAPI;
         private readonly ICurrencySettingsApi _currencySettingsApi;
-        private readonly IOptionsSnapshot<CurrencyApiSettings> _options;
+        private readonly IOptionsSnapshot<InternalApiSettings> _options;
         public GrpcCurrencyService(
             ICachedCurrencyAPI cachedCurrencyApi,
             ICurrencySettingsApi currencySettingsApi,
-            IOptionsSnapshot<CurrencyApiSettings> options)
+            IOptionsSnapshot<InternalApiSettings> options)
         {
             _cachedCurrencyAPI = cachedCurrencyApi;
             _currencySettingsApi = currencySettingsApi;
@@ -24,15 +23,15 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc
         }
         public override async Task<GetCurrencyResponse> GetCurrentCurrency(GetCurrentCurrencyRequest request, ServerCallContext context)
         {
-            if (!Enum.TryParse<CurrencyCode>(request.CurrencyCode, true, out CurrencyCode currencyCode))
-                return new GetCurrencyResponse { StatusCode = Contracts.StatusCodes.UnknownCurrency };
             try
             {
-                var currentCurrency = await _cachedCurrencyAPI.GetCurrentCurrencyAsync(currencyCode, context.CancellationToken);
+                var currentCurrency = await _cachedCurrencyAPI.GetCurrentCurrencyAsync(
+                    request.CurrencyCode,
+                    context.CancellationToken);
                 return new GetCurrencyResponse
                 {
                     StatusCode = Contracts.StatusCodes.NoError,
-                    CurrencyCode = currentCurrency.CurrencyCode.ToString(),
+                    CurrencyCode = currentCurrency.Code,
                     Value = currentCurrency.Value
                 };
             }
@@ -51,18 +50,16 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc
         }
         public override async Task<GetCurrencyResponse> GetCurrentCurrencyOnDate(GetCurrentCurrencyOnDateRequest request, ServerCallContext context)
         {
-            if (!Enum.TryParse<CurrencyCode>(request.CurrencyCode, true, out CurrencyCode currencyCode))
-                return new GetCurrencyResponse { StatusCode = Contracts.StatusCodes.UnknownCurrency };
             try
             {
                 var currencyOnDate = await _cachedCurrencyAPI.GetCurrencyOnDateAsync(
-                currencyCode,
+                request.CurrencyCode,
                 DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(request.Date.Seconds).Date),
                 context.CancellationToken);
                 return new GetCurrencyResponse
                 {
-                    StatusCode= Contracts.StatusCodes.NoError,
-                    CurrencyCode = currencyOnDate.CurrencyCode.ToString(),
+                    StatusCode = Contracts.StatusCodes.NoError,
+                    CurrencyCode = currencyOnDate.Code,
                     Value = currencyOnDate.Value
                 };
             }
@@ -81,13 +78,71 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc
         }
         public override async Task<GetSettingsResponse> GetSettings(Google.Protobuf.WellKnownTypes.Empty request, ServerCallContext context)
         {
-            (int requestCount, int requestLimit) = await _currencySettingsApi.GetRequestQuotas();
+            (int requestCount, int requestLimit) = await _currencySettingsApi.GetRequestQuotas(context.CancellationToken);
             return new GetSettingsResponse
             {
                 StatusCode = Contracts.StatusCodes.NoError,
                 BaseCurrencyCode = _options.Value.BaseCurrency,
                 CanRequest = requestLimit > requestCount,
             };
+        }
+        public override async Task<GetFavoriteCurrencyResponse> GetFavoriteCurrency(GetFavoriteCurrencyRequest request, ServerCallContext context)
+        {
+            try
+            {
+                var exchangeRate = await _cachedCurrencyAPI
+                    .GetFavoriteCurrency(
+                    request.FavoriteCurrencyBase,
+                    request.FavoriteCurrency,
+                    context.CancellationToken);
+                return new GetFavoriteCurrencyResponse
+                {
+                    StatusCode = Contracts.StatusCodes.NoError,
+                    Value = exchangeRate
+                };
+            }
+            catch (ApiRequestLimitException)
+            {
+                return new GetFavoriteCurrencyResponse { StatusCode = Contracts.StatusCodes.NoRequestsLeft };
+            }
+            catch (CurrencyNotFoundException)
+            {
+                return new GetFavoriteCurrencyResponse { StatusCode = Contracts.StatusCodes.UnknownCurrency };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public override async Task<GetFavoriteCurrencyResponse> GetFavoriteCurrencyOnDate(GetFavoriteCurrencyOnDateRequest request, ServerCallContext context)
+        {
+            try
+            {
+                var dateOnly = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(request.Date.Seconds).Date);
+                var exchangeRate = await _cachedCurrencyAPI
+                    .GetFavoriteCurrencyOnDate(
+                    request.FavoriteCurrencyBase,
+                    request.FavoriteCurrency,
+                    dateOnly,
+                    context.CancellationToken);
+                return new GetFavoriteCurrencyResponse
+                {
+                    StatusCode = Contracts.StatusCodes.NoError,
+                    Value = exchangeRate
+                };
+            }
+            catch (ApiRequestLimitException)
+            {
+                return new GetFavoriteCurrencyResponse { StatusCode = Contracts.StatusCodes.NoRequestsLeft };
+            }
+            catch (CurrencyNotFoundException)
+            {
+                return new GetFavoriteCurrencyResponse { StatusCode = Contracts.StatusCodes.UnknownCurrency };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
