@@ -263,16 +263,16 @@
         </member>
         <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController">
             <summary>
-            Методы для работы с избранными курсами обмена
+            Методы для работы с избранными парами валют, которые в будущем могут использоваться для получения курсов
             </summary>
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.GetFavoriteExchangeByName(System.String)">
             <summary>
-            Возвращает пару валют для избранного курса обмена по названию
+            Возвращает избранную пару валют по названию
             </summary>
             <param name="name">Название избранного курса обмена</param>
-            <response code="200">Возвращает при успешном получении избранного курса обмена</response>
-            <response code="404">Возвращает если избранного обмена с таким названием не существует</response>
+            <response code="200">Возвращает при успешном получении избранной пары валют</response>
+            <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.GetFavoriteExchanges">
@@ -284,29 +284,29 @@
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.AddExchangeToFavorites(Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.CreateFavoriteExchangeRequest)">
             <summary>
-            Создает новую пару валют избранного обмена
+            Создает новую избранную пару валют
             </summary>
-            <response code="200">Возвращает при успешном создании избранного курса обмена</response>
-            <response code="409">Возвращает если избранный курс с такими параметрами уже существует (имя или пара валют)</response>
+            <response code="200">Возвращает при успешном создании избранной пары валют</response>
+            <response code="409">Возвращает если избранная пара валют с такими параметрами уже существует (не уникальное имя или пара валют)</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.EditFavoriteExchange(System.String,Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.EditFavoriteExchangeRequest)">
             <summary>
-            Редактирует пару валют для избранного курса обмена по названию
+            Редактирует избранную пару валют по названию
             </summary>
-            <param name="name">Название избранного курса обмена</param>
+            <param name="name">Название избранной пары валют</param>
             <param name="request">Параметры запроса</param>
-            <response code="200">Возвращает при успешном редактировании избранного курса обмена</response>
-            <response code="404">Возвращает если избранного обмена с таким названием не существует</response>
+            <response code="200">Возвращает при успешном редактировании избранной пары валют</response>
+            <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.DeleteFavoriteExchangeByName(System.String)">
             <summary>
-            Удаляет пару валют для избранного курса обмена по названию
+            Удаляет избранную пару валют по названию
             </summary>
-            <param name="name">Название избранного курса обмена</param>
-            <response code="200">Возвращает при успешном удалении избранного курса обмена</response>
-            <response code="404">Возвращает если избранного обмена с таким названием не существует</response>
+            <param name="name">Название избранной пары валют</param>
+            <response code="200">Возвращает при успешном удалении избранной пары валют</response>
+            <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
         <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckController">
