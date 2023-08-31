@@ -15,7 +15,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
             _healthCheckAPI = healthCheckAPI;
         }
         /// <summary>
-        /// Проверяет, активен ли API
+        /// Проверяет, работает ли внешний API https://currencyapi.com/
         /// </summary>
         /// <response code="200">Возвращает, если API работает</response>
         /// <response code="503">Возвращает, при сбое в работе API</response>

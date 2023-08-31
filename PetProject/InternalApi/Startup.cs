@@ -10,6 +10,7 @@ using Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Services;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;

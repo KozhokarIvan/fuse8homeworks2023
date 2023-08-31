@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  database_postgres:
+    container_name: ${DATABASE_CONTAINER_NAME}
+    image: postgres:15.4
+    ports:
+      - "5433:${DATABASE_CONTAINER_PORT}"
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    restart: unless-stopped
+
+  internalapi:
+    container_name: ${INTERNAL_API_CONTAINER_NAME}
+    image: ${DOCKER_REGISTRY-}internalapi
+    build:
+      context: .
+      dockerfile: InternalApi/Dockerfile
+    ports: 
+      - "8080:${INTERNAL_API_CONTAINER_PORT}"
+      - "8088:${INTERNAL_API_CONTAINER_PORT_GRPC}"
+    depends_on: 
+      - database_postgres
+    environment:
+      - ASPNETCORE_URLS=http://+:${INTERNAL_API_CONTAINER_PORT}
+      - GrpcPort=${INTERNAL_API_CONTAINER_PORT_GRPC}
+      - ConnectionStrings__InternalApiDbContext=Host=${DATABASE_CONTAINER_NAME};Port=${DATABASE_CONTAINER_PORT};Database=${DATABASE_NAME_INTERNAL_API};Username=${DATABASE_USERNAME};Password=${DATABASE_PASSWORD};
+    restart: unless-stopped
+
+  publicapi:
+    container_name: ${PUBLIC_API_CONTAINER_NAME}
+    image: ${DOCKER_REGISTRY-}publicapi
+    build:
+      context: .
+      dockerfile: PublicApi/Dockerfile
+    ports: 
+      - "5166:${PUBLIC_API_CONTAINER_PORT}"
+    depends_on:
+      - internalapi
+    environment:
+      - ASPNETCORE_URLS=http://+:${PUBLIC_API_CONTAINER_PORT}
+      - GrpcUri=http://${INTERNAL_API_CONTAINER_NAME}:${INTERNAL_API_CONTAINER_PORT_GRPC}
+      - ConnectionStrings__PublicApiDbContext=Host=${DATABASE_CONTAINER_NAME};Port=${DATABASE_CONTAINER_PORT};Database=${DATABASE_NAME_PUBLIC_API};Username=${DATABASE_USERNAME};Password=${DATABASE_PASSWORD};
+    restart: unless-stopped

@@ -16,5 +16,5 @@ RUN dotnet publish PublicApi/PublicApi.csproj -c Release -o /app/publish --no-re
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 as runtime
 WORKDIR /app
 COPY --from=build /app/publish .
-EXPOSE 80
+EXPOSE 5166
 ENTRYPOINT ["dotnet", "PublicApi/PublicApi.dll"]

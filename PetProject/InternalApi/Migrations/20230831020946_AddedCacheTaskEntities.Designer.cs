@@ -3,6 +3,7 @@ using System;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
 {
     [DbContext(typeof(InternalApiDbContext))]
-    partial class InternalApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230831020946_AddedCacheTaskEntities")]
+    partial class AddedCacheTaskEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,33 +73,6 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
                         .HasDatabaseName("ix_cache_task_statuses_name");
 
                     b.ToTable("cache_task_statuses", "cur");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Задача создана"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Задача в обработке"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Задача завершена успешно"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Задача завершена с ошибкой"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Задача отменена"
-                        });
                 });
 
             modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.Currency", b =>

@@ -79,7 +79,7 @@
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.HealthCheckController.CheckHealth">
             <summary>
-            Проверяет, активен ли API
+            Проверяет, работает ли внешний API https://currencyapi.com/
             </summary>
             <response code="200">Возвращает, если API работает</response>
             <response code="503">Возвращает, при сбое в работе API</response>
@@ -233,6 +233,7 @@
             <param name="favoriteBaseCurrencyCode">Базовая валюта для избранной пары</param>
             <param name="favoriteCurrencyCode">Валюта избранной пары</param>
             <param name="cancellationToken">Токен отмены</param>
+            <param name="date">Дата на которую нужно избранную пару валют</param>
             <returns>Курс для избранной пары валют на дату <paramref name="date"/></returns>
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICurrencyAPI.GetAllCurrentCurrenciesAsync(System.String,System.Threading.CancellationToken)">
@@ -300,6 +301,18 @@
             <inheritdoc />
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedInitialCurrencyCodes.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntities">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntities.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntities.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntities.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.CurrenciesOnDate">

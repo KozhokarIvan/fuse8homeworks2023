@@ -16,5 +16,5 @@ RUN dotnet publish InternalApi/InternalApi.csproj -c Release -o /app/publish --n
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 as runtime
 WORKDIR /app
 COPY --from=build /app/publish .
-EXPOSE 80
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "InternalApi/InternalApi.dll"]

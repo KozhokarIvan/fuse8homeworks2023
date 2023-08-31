@@ -358,4 +358,7 @@ MigrationBackup/
 
 # Assets
 dist/
+
+# Custom
 appsettings.Development.json
+.env

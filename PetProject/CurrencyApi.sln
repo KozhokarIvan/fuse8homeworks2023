@@ -10,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionF
 		..\ReadMe.md = ..\ReadMe.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalApi", "InternalApi\InternalApi.csproj", "{2986C23D-709A-4FCB-84BA-92A690EEE744}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternalApi", "InternalApi\InternalApi.csproj", "{2986C23D-709A-4FCB-84BA-92A690EEE744}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8B9D3DA7-65EC-44A1-9490-FEDA61D514F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{2986C23D-709A-4FCB-84BA-92A690EEE744}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2986C23D-709A-4FCB-84BA-92A690EEE744}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2986C23D-709A-4FCB-84BA-92A690EEE744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B9D3DA7-65EC-44A1-9490-FEDA61D514F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B9D3DA7-65EC-44A1-9490-FEDA61D514F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B9D3DA7-65EC-44A1-9490-FEDA61D514F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B9D3DA7-65EC-44A1-9490-FEDA61D514F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
