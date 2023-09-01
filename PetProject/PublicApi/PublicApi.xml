@@ -22,6 +22,12 @@
             </summary>
             <example>Rub</example>
         </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.CurrencyCode">
+            <summary>
+            Коды валют
+            </summary>
+            <example>RUB</example>
+        </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.EditFavoriteExchangeRequest.Currency">
             <summary>
             Код валюты
@@ -640,12 +646,6 @@
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Migrations.AddedInitialSettings.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
-        </member>
-        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests.CurrencyCode">
-            <summary>
-            Коды валют
-            </summary>
-            <example>RUB</example>
         </member>
     </members>
 </doc>

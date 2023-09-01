@@ -183,20 +183,18 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Курс валюты с кодом <paramref name="currencyCode"/> актуальный на дату <paramref name="date"/></returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.AddCurrentCurrencies(System.Collections.Generic.Dictionary{System.String,System.Decimal},System.String,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.AddCurrentCurrencies(System.Collections.Generic.Dictionary{System.String,System.Decimal},System.Threading.CancellationToken)">
             <summary>
             Добавляет курсы всех переданных валют относительно базового
             </summary>
-            <param name="currencies">Список валют и их курсов относительно базовой валюты <paramref name="baseCurrency"/></param>
-            <param name="baseCurrency">Базовая валюта</param>
+            <param name="currencies">Список валют и их курсов относительно базовой валюты</param>
             <param name="cancellationToken">Токен отмены</param>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.AddCurrenciesOnDate(System.Collections.Generic.Dictionary{System.String,System.Decimal},System.String,System.DateOnly,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.AddCurrenciesOnDate(System.Collections.Generic.Dictionary{System.String,System.Decimal},System.DateOnly,System.Threading.CancellationToken)">
             <summary>
             Добавляет курсы всех переданных валют относительно базового на выбранную дату
             </summary>
-            <param name="currencies">Список валют и их курсов относительно базовой валюты <paramref name="baseCurrency"/></param>
-            <param name="baseCurrency">Базовая валюта</param>
+            <param name="currencies">Список валют и их курсов относительно базовой валюты</param>
             <param name="date">Дата</param>
             <param name="cancellationToken">Токен отмены</param>
         </member>
@@ -349,6 +347,30 @@
             <inheritdoc />
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsEntity.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsSeeding">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsSeeding.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsSeeding.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsSeeding.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.RemovedBaseCurrencyColumnFromCurrencyEntity">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.RemovedBaseCurrencyColumnFromCurrencyEntity.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.RemovedBaseCurrencyColumnFromCurrencyEntity.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.RemovedBaseCurrencyColumnFromCurrencyEntity.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.CurrenciesOnDate">

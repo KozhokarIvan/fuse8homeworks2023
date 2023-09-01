@@ -4,7 +4,6 @@ using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using static Grpc.Core.Metadata;
 
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
 {
@@ -82,7 +81,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
                 .OrderByDescending(c => c.DateTime)
                 .ToArrayAsync(cancellationToken);
             var baseCurrencyCode = await _context.CurrencyCodes.FirstAsync(c
-                        => c.Name.Equals(newBaseCurrency, StringComparison.InvariantCultureIgnoreCase), cancellationToken);
+                        => EF.Functions.ILike(c.Name, newBaseCurrency), cancellationToken);
             var newBaseCurrencyValue = await GetLatestCurrencyInfo(newBaseCurrency, cancellationToken);
             foreach (var currency in cacheValues)
                 currency.Value /= newBaseCurrencyValue!.Value;
@@ -97,7 +96,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
             var currencyCode = (await _context.Settings
                 .AsNoTracking()
                 .FirstAsync(s
-                => s.Name.Equals(_options.Value.BaseCurrencySettingName, StringComparison.InvariantCultureIgnoreCase), cancellationToken)).Value;
+                => EF.Functions.ILike(s.Name, _options.Value.BaseCurrencySettingName), cancellationToken))
+                .Value;
             return currencyCode;
         }
     }

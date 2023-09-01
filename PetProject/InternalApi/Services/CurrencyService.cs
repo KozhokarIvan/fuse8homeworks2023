@@ -5,8 +5,6 @@ using Fuse8_ByteMinds.SummerSchool.InternalApi.Exceptions;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Models;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
-using Microsoft.Extensions.Options;
 
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
 {

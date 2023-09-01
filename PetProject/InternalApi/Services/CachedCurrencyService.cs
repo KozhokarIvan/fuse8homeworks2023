@@ -13,8 +13,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
         private readonly ICurrencyRepository _currencyRepository;
         private readonly ICacheTaskRepository _cacheTaskRepository;
         public CachedCurrencyService(
-            ICurrencyAPI currencyService, 
-            IOptionsSnapshot<InternalApiSettings> options, 
+            ICurrencyAPI currencyService,
+            IOptionsSnapshot<InternalApiSettings> options,
             ICurrencyRepository currencyRepository,
             ICacheTaskRepository cacheTaskRepository)
         {

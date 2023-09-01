@@ -1,9 +1,7 @@
 ﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Exceptions;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
 using Grpc.Core;
-using Microsoft.Extensions.Options;
 
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc
 {
