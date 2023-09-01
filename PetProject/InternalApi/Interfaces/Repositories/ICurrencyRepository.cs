@@ -24,19 +24,17 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories
         /// <summary>
         /// Добавляет курсы всех переданных валют относительно базового
         /// </summary>
-        /// <param name="currencies">Список валют и их курсов относительно базовой валюты <paramref name="baseCurrency"/></param>
-        /// <param name="baseCurrency">Базовая валюта</param>
+        /// <param name="currencies">Список валют и их курсов относительно базовой валюты</param>
         /// <param name="cancellationToken">Токен отмены</param>
-        Task AddCurrentCurrencies(Dictionary<string, decimal> currencies, string baseCurrency, CancellationToken cancellationToken);
+        Task AddCurrentCurrencies(Dictionary<string, decimal> currencies, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавляет курсы всех переданных валют относительно базового на выбранную дату
         /// </summary>
-        /// <param name="currencies">Список валют и их курсов относительно базовой валюты <paramref name="baseCurrency"/></param>
-        /// <param name="baseCurrency">Базовая валюта</param>
+        /// <param name="currencies">Список валют и их курсов относительно базовой валюты</param>
         /// <param name="date">Дата</param>
         /// <param name="cancellationToken">Токен отмены</param>
-        Task AddCurrenciesOnDate(Dictionary<string, decimal> currencies, string baseCurrency, DateOnly date, CancellationToken cancellationToken);
+        Task AddCurrenciesOnDate(Dictionary<string, decimal> currencies, DateOnly date, CancellationToken cancellationToken);
         Task<string> GetBaseCurrency(CancellationToken cancellationToken);
         Task UpdateCache(string newBaseCurrency, CancellationToken cancellationToken);
     }

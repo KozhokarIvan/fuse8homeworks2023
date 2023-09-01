@@ -89,39 +89,32 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
             var currenciesDictionary = currencies.ToDictionary(
                el => el.Code,
                el => el.Value);
-            await _currencyRepository.AddCurrentCurrencies(
-                currenciesDictionary, 
-                await _currencyRepository.GetBaseCurrency(cancellationToken), 
-                cancellationToken);
+            await _currencyRepository.AddCurrentCurrencies(currenciesDictionary, cancellationToken);
         }
         private async Task SaveCurrenciesOnDateToCacheAsync(Currency[] currencies, DateOnly date, CancellationToken cancellationToken)
         {
             var currenciesDictionary = currencies.ToDictionary(
                 el => el.Code,
                 el => el.Value);
-            await _currencyRepository.AddCurrenciesOnDate(
-                currenciesDictionary, 
-                await _currencyRepository.GetBaseCurrency(cancellationToken),
-                date, 
-                cancellationToken);
+            await _currencyRepository.AddCurrenciesOnDate(currenciesDictionary, date, cancellationToken);
         }
 
         public async Task<decimal> GetFavoriteCurrency(string favoriteBaseCurrencyCode, string favoriteCurrencyCode, CancellationToken cancellationToken)
         {
             var favoriteCurrency = await GetCurrentCurrencyAsync(favoriteCurrencyCode, cancellationToken);
             var favoriteBaseCurrency = await _currencyRepository.GetLatestCurrencyInfo(favoriteBaseCurrencyCode, cancellationToken);
-            if (favoriteBaseCurrency!.BaseCurrencyCode.Name.Equals(favoriteBaseCurrencyCode, StringComparison.InvariantCultureIgnoreCase))
+            if (favoriteBaseCurrencyCode.Equals(await _currencyRepository.GetBaseCurrency(cancellationToken), StringComparison.InvariantCultureIgnoreCase))
                 return favoriteCurrency.Value;
-            return favoriteCurrency.Value / favoriteBaseCurrency.Value;
+            return favoriteCurrency.Value / favoriteBaseCurrency!.Value;
         }
 
         public async Task<decimal> GetFavoriteCurrencyOnDate(string favoriteBaseCurrencyCode, string favoriteCurrencyCode, DateOnly date, CancellationToken cancellationToken)
         {
             var favoriteCurrency = await GetCurrencyOnDateAsync(favoriteCurrencyCode, date, cancellationToken);
             var favoriteBaseCurrency = await _currencyRepository.GetCurrencyInfoOnDate(favoriteBaseCurrencyCode, date, cancellationToken);
-            if (favoriteBaseCurrency!.BaseCurrencyCode.Name.Equals(favoriteBaseCurrencyCode, StringComparison.InvariantCultureIgnoreCase))
+            if (favoriteBaseCurrencyCode.Equals(await _currencyRepository.GetBaseCurrency(cancellationToken), StringComparison.InvariantCultureIgnoreCase))
                 return favoriteCurrency.Value;
-            return favoriteCurrency.Value / favoriteBaseCurrency.Value;
+            return favoriteCurrency.Value / favoriteBaseCurrency!.Value;
         }
     }
 }

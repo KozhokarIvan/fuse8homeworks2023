@@ -24,7 +24,6 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
                 .AsNoTracking()
                 .Where(c => EF.Functions.ILike(c.CurrencyCode.Name, currencyCode))
                 .OrderByDescending(c => c.DateTime)
-                .Include(c => c.BaseCurrencyCode)
                 .Include(c => c.CurrencyCode)
                 .FirstOrDefaultAsync(cancellationToken);
             return currency;
@@ -39,13 +38,12 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
                     => c.DateTime.Date == dateTime.Date
                     && EF.Functions.ILike(c.CurrencyCode.Name, currencyCode))
                 .OrderByDescending(c => c.DateTime)
-                .Include(c => c.BaseCurrencyCode)
                 .Include(c => c.CurrencyCode)
                 .FirstOrDefaultAsync(cancellationToken);
             return currency;
         }
 
-        public async Task AddCurrentCurrencies(Dictionary<string, decimal> currencies, string baseCurrency, CancellationToken cancellationToken)
+        public async Task AddCurrentCurrencies(Dictionary<string, decimal> currencies, CancellationToken cancellationToken)
         {
             var currentDateTime = DateTime.UtcNow;
             var currencyCodes = await _context.CurrencyCodes.ToArrayAsync(cancellationToken);
@@ -55,8 +53,6 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
                 {
                     CurrencyCodeId = currencyCodes.First(c
                         => c.Name.Equals(entry.Key, StringComparison.InvariantCultureIgnoreCase)).Id,
-                    BaseCurrencyCodeId = currencyCodes.First(c
-                        => c.Name.Equals(baseCurrency, StringComparison.InvariantCultureIgnoreCase)).Id,
                     Value = entry.Value,
                     DateTime = currentDateTime,
                 });
@@ -64,7 +60,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
             await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task AddCurrenciesOnDate(Dictionary<string, decimal> currencies, string baseCurrency, DateOnly date, CancellationToken cancellationToken)
+        public async Task AddCurrenciesOnDate(Dictionary<string, decimal> currencies, DateOnly date, CancellationToken cancellationToken)
         {
             var dateTime = DateTime.SpecifyKind(new DateTime(date.Year, date.Month, date.Day), DateTimeKind.Utc);
             var currencyCodes = await _context.CurrencyCodes.ToArrayAsync(cancellationToken);
@@ -74,8 +70,6 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
                 {
                     CurrencyCodeId = currencyCodes.First(c
                         => c.Name.Equals(entry.Key, StringComparison.InvariantCultureIgnoreCase)).Id,
-                    BaseCurrencyCodeId = currencyCodes.First(c
-                        => c.Name.Equals(baseCurrency, StringComparison.InvariantCultureIgnoreCase)).Id,
                     Value = entry.Value,
                     DateTime = dateTime,
                 });
@@ -91,10 +85,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
                         => c.Name.Equals(newBaseCurrency, StringComparison.InvariantCultureIgnoreCase), cancellationToken);
             var newBaseCurrencyValue = await GetLatestCurrencyInfo(newBaseCurrency, cancellationToken);
             foreach (var currency in cacheValues)
-            {
-                currency.BaseCurrencyCodeId = baseCurrencyCode.Id;
                 currency.Value /= newBaseCurrencyValue!.Value;
-            }
             var baseCurrencySetting = await _context.Settings
                 .FirstAsync(s => s.Name == _options.Value.BaseCurrencySettingName, cancellationToken);
             baseCurrencySetting.Value = newBaseCurrency;
