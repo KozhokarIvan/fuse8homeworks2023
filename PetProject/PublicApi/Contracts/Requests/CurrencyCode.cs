@@ -1,4 +1,4 @@
-﻿namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests
+﻿namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests
 {
     /// <summary>
     /// Коды валют

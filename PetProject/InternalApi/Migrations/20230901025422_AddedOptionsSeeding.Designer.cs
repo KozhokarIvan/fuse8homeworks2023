@@ -3,6 +3,7 @@ using System;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
 {
     [DbContext(typeof(InternalApiDbContext))]
-    partial class InternalApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230901025422_AddedOptionsSeeding")]
+    partial class AddedOptionsSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

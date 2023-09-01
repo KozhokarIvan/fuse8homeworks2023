@@ -2,9 +2,10 @@
 using System.Text.Json;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.ExternalCurrencyApi;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Exceptions;
+using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories;
+using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Models;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
@@ -12,11 +13,11 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
     public class CurrencyService : ICurrencyAPI, ICurrencySettingsApi, IHealthCheckService
     {
         private readonly HttpClient _httpClient;
-        private readonly IOptionsSnapshot<InternalApiSettings> _options;
-        public CurrencyService(HttpClient httpClient, IOptionsSnapshot<InternalApiSettings> options)
+        private readonly ICurrencyRepository _currencyRepository;
+        public CurrencyService(HttpClient httpClient, ICurrencyRepository currencyRepository)
         {
             _httpClient = httpClient;
-            _options = options;
+            _currencyRepository = currencyRepository;
         }
         public async Task<bool> CheckHealth(CancellationToken cancellationToken)
         {
@@ -40,7 +41,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
         public async Task<Models.Currency[]> GetAllCurrentCurrenciesAsync(string baseCurrency, CancellationToken cancellationToken)
         {
             var response = await _httpClient.GetAsync(
-                $"latest?base_currency={_options.Value.BaseCurrency}",
+                $"latest?base_currency={await _currencyRepository.GetBaseCurrency(cancellationToken)}",
                 cancellationToken);
             bool currencyDoesNotExist = response.StatusCode == HttpStatusCode.UnprocessableEntity;
             if (currencyDoesNotExist)
@@ -65,7 +66,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
         public async Task<CurrenciesOnDate> GetAllCurrenciesOnDateAsync(string baseCurrency, DateOnly date, CancellationToken cancellationToken)
         {
             var response = await _httpClient.GetAsync(
-                $"historical?base_currency={_options.Value.BaseCurrency}&date={date:yyyy-MM-dd}",
+                $"historical?base_currency={await _currencyRepository.GetBaseCurrency(cancellationToken)}&date={date:yyyy-MM-dd}",
                 cancellationToken);
             bool currencyDoesNotExist = response.StatusCode == HttpStatusCode.UnprocessableEntity;
             if (currencyDoesNotExist)
@@ -87,5 +88,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
             var result = new CurrenciesOnDate(statusResponse.Meta.LastUpdatedAt, currencies);
             return result;
         }
+
+        public async Task<string> GetBaseCurrency(CancellationToken cancellationToken)
+            => await _currencyRepository.GetBaseCurrency(cancellationToken);
     }
 }

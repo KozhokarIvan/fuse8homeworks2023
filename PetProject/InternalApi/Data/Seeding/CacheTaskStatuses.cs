@@ -4,16 +4,16 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Seeding
 {
     public class CacheTaskStatuses
     {
-        public CacheTaskStatus[] Values { get; set; }= Array.Empty<CacheTaskStatus>();
+        public CacheTaskStatus[] Values { get; set; } = Array.Empty<CacheTaskStatus>();
         public CacheTaskStatuses()
         {
-            Values = new CacheTaskStatus[] 
+            Values = new CacheTaskStatus[]
             {
-                new CacheTaskStatus() {Id = 1, Name = "Задача создана"},
-                new CacheTaskStatus() {Id = 2, Name = "Задача в обработке"},
-                new CacheTaskStatus() {Id = 3, Name = "Задача завершена успешно"},
-                new CacheTaskStatus() {Id = 4, Name = "Задача завершена с ошибкой"},
-                new CacheTaskStatus() {Id = 5, Name = "Задача отменена"}
+                new CacheTaskStatus() {Id = (int)Models.CacheTaskStatuses.Created, Name = "Задача создана"},
+                new CacheTaskStatus() {Id = (int)Models.CacheTaskStatuses.InProgress, Name = "Задача в обработке"},
+                new CacheTaskStatus() {Id = (int)Models.CacheTaskStatuses.Succeeded, Name = "Задача завершена успешно"},
+                new CacheTaskStatus() {Id = (int)Models.CacheTaskStatuses.Failed, Name = "Задача завершена с ошибкой"},
+                new CacheTaskStatus() {Id = (int)Models.CacheTaskStatuses.Cancelled, Name = "Задача отменена"}
             };
         }
     }

@@ -3,6 +3,7 @@ using System;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
 {
     [DbContext(typeof(InternalApiDbContext))]
-    partial class InternalApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230901025407_AddedOptionsEntity")]
+    partial class AddedOptionsEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1110,14 +1113,6 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
                         .HasDatabaseName("ix_settings_name");
 
                     b.ToTable("settings", "cur");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "baseCurrency",
-                            Value = "USD"
-                        });
                 });
 
             modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.CacheTask", b =>

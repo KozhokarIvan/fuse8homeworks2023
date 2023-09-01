@@ -1,8 +1,8 @@
 ﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Responses;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Exceptions;
+using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -16,15 +16,15 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
     {
         private readonly ICachedCurrencyAPI _cachedCurrencyAPI;
         private readonly ICurrencySettingsApi _currencySettingsApi;
-        private readonly IOptionsSnapshot<InternalApiSettings> _options;
+        private readonly ICacheTasksService _cacheTaskService;
         public CurrencyController(
             ICachedCurrencyAPI cachedCurrencyAPI,
             ICurrencySettingsApi currencySettingsApi,
-            IOptionsSnapshot<InternalApiSettings> options)
+            ICacheTasksService cacheTaskService)
         {
             _cachedCurrencyAPI = cachedCurrencyAPI;
             _currencySettingsApi = currencySettingsApi;
-            _options = options;
+            _cacheTaskService = cacheTaskService;
         }
         /// <summary>
         /// Возвращает курс выбранной валюты относительно базового, актуальный на данный момент
@@ -97,9 +97,17 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
             var response = new GetSettingsResponse
             {
                 RequestsAvailable = requestCount <= requestLimit,
-                BaseCurrency = _options.Value.BaseCurrency
+                BaseCurrency = await _currencySettingsApi.GetBaseCurrency(cancellationToken)
             };
             return Ok(response);
+        }
+
+        [HttpPost("cache")]
+        public async Task<IActionResult> SetNewBaseCurrency(SetNewBaseCurrencyRequest request)
+        {
+            var cancellationToken = HttpContext.RequestAborted;
+            var taskId = await _cacheTaskService.AddTaskAsync(request.NewBaseCurrency.ToString(), cancellationToken);
+            return Accepted(taskId);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities;
 
-namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces
+namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories
 {
     public interface ICurrencyRepository
     {
@@ -37,5 +37,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces
         /// <param name="date">Дата</param>
         /// <param name="cancellationToken">Токен отмены</param>
         Task AddCurrenciesOnDate(Dictionary<string, decimal> currencies, string baseCurrency, DateOnly date, CancellationToken cancellationToken);
+        Task<string> GetBaseCurrency(CancellationToken cancellationToken);
+        Task UpdateCache(string newBaseCurrency, CancellationToken cancellationToken);
     }
 }

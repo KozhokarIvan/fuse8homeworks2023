@@ -7,6 +7,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities
     {
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string NewBaseCurrency { get; set; } = null!;
         public CacheTaskStatus Status { get; set; } = null!;
         public int StatusId { get; set; }
     }
@@ -25,6 +26,9 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities
                 .HasForeignKey(t => t.StatusId);
             builder
                 .Property(t => t.CreatedAt).IsRequired();
+            builder
+                .Property(t => t.NewBaseCurrency)
+                .IsRequired();
         }
     }
 }

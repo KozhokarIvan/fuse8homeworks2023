@@ -166,7 +166,7 @@
             <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
             <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.ICurrencyRepository.GetLatestCurrencyInfo(System.String,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.GetLatestCurrencyInfo(System.String,System.Threading.CancellationToken)">
             <summary>
              Получает последний курс для выбранной валюты
             </summary>
@@ -174,7 +174,7 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Последний курс валюты с кодом <paramref name="currencyCode"/></returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.ICurrencyRepository.GetCurrencyInfoOnDate(System.String,System.DateOnly,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.GetCurrencyInfoOnDate(System.String,System.DateOnly,System.Threading.CancellationToken)">
             <summary>
              Получает курс для выбранной валюты на выбранную дату
             </summary>
@@ -183,7 +183,7 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Курс валюты с кодом <paramref name="currencyCode"/> актуальный на дату <paramref name="date"/></returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.ICurrencyRepository.AddCurrentCurrencies(System.Collections.Generic.Dictionary{System.String,System.Decimal},System.String,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.AddCurrentCurrencies(System.Collections.Generic.Dictionary{System.String,System.Decimal},System.String,System.Threading.CancellationToken)">
             <summary>
             Добавляет курсы всех переданных валют относительно базового
             </summary>
@@ -191,7 +191,7 @@
             <param name="baseCurrency">Базовая валюта</param>
             <param name="cancellationToken">Токен отмены</param>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.ICurrencyRepository.AddCurrenciesOnDate(System.Collections.Generic.Dictionary{System.String,System.Decimal},System.String,System.DateOnly,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.AddCurrenciesOnDate(System.Collections.Generic.Dictionary{System.String,System.Decimal},System.String,System.DateOnly,System.Threading.CancellationToken)">
             <summary>
             Добавляет курсы всех переданных валют относительно базового на выбранную дату
             </summary>
@@ -200,7 +200,7 @@
             <param name="date">Дата</param>
             <param name="cancellationToken">Токен отмены</param>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICachedCurrencyAPI.GetCurrentCurrencyAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.ICachedCurrencyAPI.GetCurrentCurrencyAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Получает текущий курс
             </summary>
@@ -208,7 +208,7 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Текущий курс</returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICachedCurrencyAPI.GetCurrencyOnDateAsync(System.String,System.DateOnly,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.ICachedCurrencyAPI.GetCurrencyOnDateAsync(System.String,System.DateOnly,System.Threading.CancellationToken)">
             <summary>
             Получает курс валюты, актуальный на <paramref name="date"/>
             </summary>
@@ -217,7 +217,7 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Курс на дату <paramref name="date"/></returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICachedCurrencyAPI.GetFavoriteCurrency(System.String,System.String,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.ICachedCurrencyAPI.GetFavoriteCurrency(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Получает текущий курс для избранной пары валют
             </summary>
@@ -226,7 +226,7 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Текущий курс для избранной пары валют</returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICachedCurrencyAPI.GetFavoriteCurrencyOnDate(System.String,System.String,System.DateOnly,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.ICachedCurrencyAPI.GetFavoriteCurrencyOnDate(System.String,System.String,System.DateOnly,System.Threading.CancellationToken)">
             <summary>
             Получает курс для избранной пары валют на выбранную дату <paramref name="date"/>
             </summary>
@@ -236,7 +236,7 @@
             <param name="date">Дата на которую нужно избранную пару валют</param>
             <returns>Курс для избранной пары валют на дату <paramref name="date"/></returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICurrencyAPI.GetAllCurrentCurrenciesAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.ICurrencyAPI.GetAllCurrentCurrenciesAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Получает текущий курс для всех валют
             </summary>
@@ -244,7 +244,7 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Список курсов валют</returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICurrencyAPI.GetAllCurrenciesOnDateAsync(System.String,System.DateOnly,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.ICurrencyAPI.GetAllCurrenciesOnDateAsync(System.String,System.DateOnly,System.Threading.CancellationToken)">
             <summary>
             Получает курс для всех валют, актуальный на <paramref name="date"/>
             </summary>
@@ -253,14 +253,14 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Список курсов валют на дату</returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.ICurrencySettingsApi.GetRequestQuotas(System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.ICurrencySettingsApi.GetRequestQuotas(System.Threading.CancellationToken)">
             <summary>
             Получает количество запросов и максимально возможное количество запросов
             </summary>
             <param name="cancellationToken">токен отмены</param>
             <returns>Количество запросов и максимально возможное количество запросов</returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces.IHealthCheckService.CheckHealth(System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.IHealthCheckService.CheckHealth(System.Threading.CancellationToken)">
             <summary>
             Возвращает статус работы
             </summary>
@@ -313,6 +313,42 @@
             <inheritdoc />
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntities.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntitiesSeedingData">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntitiesSeedingData.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntitiesSeedingData.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedCacheTaskEntitiesSeedingData.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedNewBaseCurrencyColumnToCacheTask">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedNewBaseCurrencyColumnToCacheTask.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedNewBaseCurrencyColumnToCacheTask.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedNewBaseCurrencyColumnToCacheTask.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsEntity">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsEntity.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsEntity.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations.AddedOptionsEntity.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Models.CurrenciesOnDate">

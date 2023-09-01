@@ -3,6 +3,7 @@ using System;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
 {
     [DbContext(typeof(InternalApiDbContext))]
-    partial class InternalApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230831024907_AddedNewBaseCurrencyColumnToCacheTask")]
+    partial class AddedNewBaseCurrencyColumnToCacheTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1081,42 +1084,6 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
                         {
                             Id = 185,
                             Name = "zwl"
-                        });
-                });
-
-            modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.Setting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("value");
-
-                    b.HasKey("Id")
-                        .HasName("pk_settings");
-
-                    b.HasIndex("Name")
-                        .HasDatabaseName("ix_settings_name");
-
-                    b.ToTable("settings", "cur");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "baseCurrency",
-                            Value = "USD"
                         });
                 });
 
