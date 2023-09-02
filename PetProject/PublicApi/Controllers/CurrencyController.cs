@@ -29,9 +29,8 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetCurrencyResponse), StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<IActionResult> GetDefaultCurrency()
+        public async Task<IActionResult> GetDefaultCurrency(CancellationToken cancellationToken)
         {
-            var cancellationToken = HttpContext.RequestAborted;
             (string currencyCode, decimal value) = await _currencyService.GetDefaultCurrency(cancellationToken);
             var response = new GetCurrencyResponse
             {
@@ -51,9 +50,8 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetCurrencyResponse), StatusCodes.Status200OK)]
         [HttpGet("{currency}")]
-        public async Task<IActionResult> GetCurrencyByCode(string currency)
+        public async Task<IActionResult> GetCurrencyByCode(string currency, CancellationToken cancellationToken)
         {
-            var cancellationToken = HttpContext.RequestAborted;
             (string code, decimal value) = await _currencyService.GetCurrencyByCode(currency, cancellationToken);
             var response = new GetCurrencyResponse
             {
@@ -75,12 +73,11 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetCurrencyOnDateResponse), StatusCodes.Status200OK)]
         [HttpGet("{currency}/{date}")]
-        public async Task<IActionResult> GetCurrencyOnDate(string currency, string date)
+        public async Task<IActionResult> GetCurrencyOnDate(string currency, string date, CancellationToken cancellationToken)
         {
             bool isDateValid = DateOnly.TryParseExact(date, "yyyy-MM-dd", out var parsedDate);
             if (!isDateValid)
                 return BadRequest($"Ожидалась дата формата: 'yyyy-MM-dd', получена: '{date}'");
-            var cancellationToken = HttpContext.RequestAborted;
             decimal value = await _currencyService.GetCurrencyOnDate(currency, parsedDate, cancellationToken);
             var response = new GetCurrencyOnDateResponse
             {
@@ -100,9 +97,8 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetFavoriteExchangeRateResponse), StatusCodes.Status200OK)]
         [HttpGet("favorites/{name}")]
-        public async Task<IActionResult> GetFavoriteExchangeRateByName(string name)
+        public async Task<IActionResult> GetFavoriteExchangeRateByName(string name, CancellationToken cancellationToken)
         {
-            var cancellationToken = HttpContext.RequestAborted;
             var exchangeRate = await _currencyService.GetFavoriteCurrency(name, cancellationToken);
             return exchangeRate is not null
                 ? Ok(new GetFavoriteExchangeRateResponse { ExchangeRate = exchangeRate.Value })
@@ -120,12 +116,11 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetFavoriteExchangeRateResponse), StatusCodes.Status200OK)]
         [HttpGet("favorites/{name}/{date}")]
-        public async Task<IActionResult> GetFavoriteExchangeRateByName(string name, string date)
+        public async Task<IActionResult> GetFavoriteExchangeRateByNameOnDate(string name, string date, CancellationToken cancellationToken)
         {
             bool isDateValid = DateOnly.TryParseExact(date, "yyyy-MM-dd", out var parsedDate);
             if (!isDateValid)
                 return BadRequest($"Ожидалась дата формата: 'yyyy-MM-dd', получена: '{date}'");
-            var cancellationToken = HttpContext.RequestAborted;
             var exchangeRate = await _currencyService.GetFavoriteCurrencyOnDate(name, parsedDate, cancellationToken);
             return exchangeRate is not null
                 ? Ok(new GetFavoriteExchangeRateResponse { ExchangeRate = exchangeRate.Value }) :
@@ -139,9 +134,8 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetSettingsResponse), StatusCodes.Status200OK)]
         [HttpGet("/settings")]
-        public async Task<IActionResult> GetSettings()
+        public async Task<IActionResult> GetSettings(CancellationToken cancellationToken)
         {
-            var cancellationToken = HttpContext.RequestAborted;
             (string baseCurrency, bool canRequest) = await _currencyService.GetRequestQuotas(cancellationToken);
             (string defaultCurrency, int decimalPlaces) = await _settingsService.GetSettings(cancellationToken);
             var settings = new GetSettingsResponse()
@@ -160,9 +154,8 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="200">Возвращает при успешном изменении валюты по умолчанию</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [HttpPost("/settings/currency")]
-        public async Task<IActionResult> SetDefaultCurrency(SetDefaultCurrencyRequest request)
+        public async Task<IActionResult> SetDefaultCurrency(SetDefaultCurrencyRequest request, CancellationToken cancellationToken)
         {
-            var cancellationToken = HttpContext.RequestAborted;
             await _settingsService.SetDefaultCurrency(request.CurrencyCode.ToString(), cancellationToken);
             return Ok("Валюта по умолчанию успешно изменена");
         }
@@ -173,9 +166,8 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="200">Возвращает при успешном изменении точности округления</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [HttpPost("/settings/decimal-places")]
-        public async Task<IActionResult> SetDecimalPlaces(SetDecimalPlacesRequest request)
+        public async Task<IActionResult> SetDecimalPlaces(SetDecimalPlacesRequest request, CancellationToken cancellationToken)
         {
-            var cancellationToken = HttpContext.RequestAborted;
             await _settingsService.SetDecimalPlaces(request.DecimalPlaces, cancellationToken);
             return Ok("Количество десятичных разрядов для округления успешно изменено");
         }

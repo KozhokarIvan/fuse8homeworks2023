@@ -33,9 +33,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [HttpGet]
         [ProducesResponseType(typeof(GetCurrencyResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetCurrencyByCode(GetCurrencyRequest request)
+        public async Task<IActionResult> GetCurrencyByCode(GetCurrencyRequest request, CancellationToken cancellationToken)
         {
-            CancellationToken cancellationToken = HttpContext.RequestAborted;
             try
             {
                 var result = await _cachedCurrencyAPI.GetCurrentCurrencyAsync(request.CurrencyType.ToString(), cancellationToken);
@@ -63,9 +62,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [HttpGet("{date}")]
         [ProducesResponseType(typeof(GetCurrencyResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetCurrencyOnDate(GetCurrencyRequest request, string date)
+        public async Task<IActionResult> GetCurrencyOnDate(GetCurrencyRequest request, string date, CancellationToken cancellationToken)
         {
-            CancellationToken cancellationToken = HttpContext.RequestAborted;
             bool isDateValid = DateOnly.TryParseExact(date, "yyyy-MM-dd", out var parsedDate);
             if (!isDateValid)
                 return BadRequest($"Ожидалась дата формата: 'yyyy-MM-dd', получена: '{date}'");
@@ -88,9 +86,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [HttpGet("settings")]
         [ProducesResponseType(typeof(GetSettingsResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetSettings()
+        public async Task<IActionResult> GetSettings(CancellationToken cancellationToken)
         {
-            var cancellationToken = HttpContext.RequestAborted;
             (int requestCount, int requestLimit) = await _currencySettingsApi.GetRequestQuotas(cancellationToken);
             var response = new GetSettingsResponse
             {
@@ -101,9 +98,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         }
 
         [HttpPost("cache")]
-        public async Task<IActionResult> SetNewBaseCurrency(SetNewBaseCurrencyRequest request)
+        public async Task<IActionResult> SetNewBaseCurrency(SetNewBaseCurrencyRequest request, CancellationToken cancellationToken)
         {
-            var cancellationToken = HttpContext.RequestAborted;
             var taskId = await _cacheTaskService.AddTaskAsync(request.NewBaseCurrency.ToString(), cancellationToken);
             return Accepted(taskId);
         }

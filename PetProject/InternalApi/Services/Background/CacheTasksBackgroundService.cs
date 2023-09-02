@@ -29,6 +29,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Background
                 {
                     var cacheRecalculatingService = scope.ServiceProvider.GetRequiredService<ICacheRecalculatingService>();
                     await cacheRecalculatingService.RecalculateCacheAsync(workItem.TaskId, stoppingToken);
+                    _logger.LogInformation("Кэш был успешно пересчитан, Guid задачи: {guid}", workItem.TaskId);
                 }
                 catch (Exception ex)
                 {

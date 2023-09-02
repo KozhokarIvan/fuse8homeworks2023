@@ -20,8 +20,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
         /// <response code="200">Возвращает, если API работает</response>
         /// <response code="503">Возвращает, при сбое в работе API</response>
         [HttpGet]
-        public async Task<IActionResult> CheckHealth()
-        => await _healthCheckAPI.CheckHealth(HttpContext.RequestAborted)
+        public async Task<IActionResult> CheckHealth(CancellationToken cancellationToken)
+        => await _healthCheckAPI.CheckHealth(cancellationToken)
                 ? Ok()
                 : new StatusCodeResult(StatusCodes.Status503ServiceUnavailable);
     }

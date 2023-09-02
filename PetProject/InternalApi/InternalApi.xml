@@ -45,7 +45,7 @@
             Методы для работы с внешним API https://currencyapi.com/
             </summary>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.CurrencyController.GetCurrencyByCode(Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests.GetCurrencyRequest)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.CurrencyController.GetCurrencyByCode(Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests.GetCurrencyRequest,System.Threading.CancellationToken)">
             <summary>
             Возвращает курс выбранной валюты относительно базового, актуальный на данный момент
             </summary>
@@ -54,7 +54,7 @@
             <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.CurrencyController.GetCurrencyOnDate(Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests.GetCurrencyRequest,System.String)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.CurrencyController.GetCurrencyOnDate(Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests.GetCurrencyRequest,System.String,System.Threading.CancellationToken)">
             <summary>
             Возвращает курс выбранной валюты относительно базового, актуальный на данный момент
             </summary>
@@ -65,7 +65,7 @@
             <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.CurrencyController.GetSettings">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.CurrencyController.GetSettings(System.Threading.CancellationToken)">
             <summary>
             Возвращает настройки API
             </summary>
@@ -77,7 +77,7 @@
             Методы для определения работоспособности API
             </summary>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.HealthCheckController.CheckHealth">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers.HealthCheckController.CheckHealth(System.Threading.CancellationToken)">
             <summary>
             Проверяет, работает ли внешний API https://currencyapi.com/
             </summary>

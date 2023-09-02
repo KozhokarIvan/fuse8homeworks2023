@@ -22,7 +22,7 @@ services:
     depends_on: 
       - database_postgres
     environment:
-      - ASPNETCORE_URLS=http://+:${INTERNAL_API_CONTAINER_PORT}
+      - ASPNETCORE_URLS=http://+:${INTERNAL_API_CONTAINER_PORT};http://+:${INTERNAL_API_CONTAINER_PORT_GRPC}
       - GrpcPort=${INTERNAL_API_CONTAINER_PORT_GRPC}
       - ConnectionStrings__InternalApiDbContext=Host=${DATABASE_CONTAINER_NAME};Port=${DATABASE_CONTAINER_PORT};Database=${DATABASE_NAME_INTERNAL_API};Username=${DATABASE_USERNAME};Password=${DATABASE_PASSWORD};
     restart: unless-stopped
