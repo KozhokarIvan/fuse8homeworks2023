@@ -1,5 +1,4 @@
-﻿using Fuse8_ByteMinds.SummerSchool.PublicApi.Data;
-using Fuse8_ByteMinds.SummerSchool.PublicApi.Data.Entities;
+﻿using Fuse8_ByteMinds.SummerSchool.PublicApi.Data.Entities;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
