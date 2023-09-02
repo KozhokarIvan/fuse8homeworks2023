@@ -1,5 +1,8 @@
 ﻿namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses
 {
+    /// <summary>
+    /// Модель ответа для получения избранной пары валют по ее названию
+    /// </summary>
     public class GetFavoriteExchangeByNameResponse
     {
         /// <summary>

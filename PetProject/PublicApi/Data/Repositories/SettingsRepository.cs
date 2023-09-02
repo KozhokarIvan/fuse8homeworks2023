@@ -5,7 +5,7 @@ using Fuse8_ByteMinds.SummerSchool.PublicApi.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Repositories
+namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Data.Repositories
 {
     public class SettingsRepository : ISettingsRepository
     {

@@ -4,7 +4,7 @@ using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
+namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
 {
     public class CacheTaskRepository : ICacheTaskRepository
     {

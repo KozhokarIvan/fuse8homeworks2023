@@ -97,6 +97,11 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Устанавливает новую базовую валюту
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         [HttpPost("cache")]
         public async Task<IActionResult> SetNewBaseCurrency(SetNewBaseCurrencyRequest request, CancellationToken cancellationToken)
         {

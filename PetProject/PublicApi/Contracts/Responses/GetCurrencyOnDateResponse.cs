@@ -1,5 +1,8 @@
 ﻿namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses
 {
+    /// <summary>
+    /// Модель ответа для получения курса валют в нужную дату
+    /// </summary>
     public class GetCurrencyOnDateResponse
     {
         /// <summary>

@@ -35,7 +35,19 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories
         /// <param name="date">Дата</param>
         /// <param name="cancellationToken">Токен отмены</param>
         Task AddCurrenciesOnDate(Dictionary<string, decimal> currencies, DateOnly date, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Возвращает код базовой валюты
+        /// </summary>
+        /// <param name="cancellationToken">Токен отмены</param>
         Task<string> GetBaseCurrency(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Пересчитывает все курсы валют относительно <paramref name="newBaseCurrency"/>, изменяя при этом базовый на <paramref name="newBaseCurrency"/>
+        /// в рамках одной транзакции
+        /// </summary>
+        /// <param name="newBaseCurrency">Код новой базовой валюты</param>
+        /// <param name="cancellationToken">Токен отмены</param>
         Task UpdateCache(string newBaseCurrency, CancellationToken cancellationToken);
     }
 }

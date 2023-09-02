@@ -2,13 +2,13 @@
 using Audit.Core;
 using Audit.Http;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Data;
+using Fuse8_ByteMinds.SummerSchool.PublicApi.Data.Repositories;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Filters;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Grpc.Contracts;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Interfaces.Repositories;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Interfaces.Services;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Middleware;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Options;
-using Fuse8_ByteMinds.SummerSchool.PublicApi.Repositories;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

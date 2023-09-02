@@ -8,6 +8,10 @@
         /// <param name="cancellationToken">токен отмены</param>
         /// <returns>Количество запросов и максимально возможное количество запросов</returns>
         Task<(int requestCount, int requestLimit)> GetRequestQuotas(CancellationToken cancellationToken);
+        /// <summary>
+        /// Возвращает код базовой валюты
+        /// </summary>
+        /// <param name="cancellationToken">Токен отмены</param>
         Task<string> GetBaseCurrency(CancellationToken cancellationToken);
     }
 }

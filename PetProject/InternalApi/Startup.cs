@@ -2,13 +2,13 @@
 using Audit.Core;
 using Audit.Http;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Data;
+using Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services.Background;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Middleware;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Services;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Background;
 using Microsoft.EntityFrameworkCore;

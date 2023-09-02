@@ -5,7 +5,7 @@ using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Repositories
+namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
 {
     public class CurrencyRepository : ICurrencyRepository
     {

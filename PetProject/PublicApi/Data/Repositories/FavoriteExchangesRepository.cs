@@ -3,7 +3,7 @@ using Fuse8_ByteMinds.SummerSchool.PublicApi.Data.Entities;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Repositories
+namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Data.Repositories
 {
     public class FavoriteExchangesRepository : IFavoriteExchangesRepository
     {
