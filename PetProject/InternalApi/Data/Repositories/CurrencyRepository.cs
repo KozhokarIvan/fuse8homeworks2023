@@ -101,7 +101,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
         {
             var currency = _context.Currencies
                 .AsNoTracking()
-                .FirstAsync(c => EF.Functions.ILike(c.CurrencyCode.Name, currencyCode) && c.DateTime == dateTime, 
+                .FirstAsync(c => EF.Functions.ILike(c.CurrencyCode.Name, currencyCode) && c.DateTime == dateTime,
                 cancellationToken);
             return currency;
         }

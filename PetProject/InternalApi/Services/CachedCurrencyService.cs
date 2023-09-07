@@ -30,12 +30,12 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
                 return result;
             await UpdateCache(cancellationToken);
             var baseCurrency = await _currencyRepository.GetBaseCurrency(cancellationToken);
-            var currenciesOnDate = await _currencyService
-                    .GetAllCurrenciesOnDateAsync(baseCurrency, date, cancellationToken);
-            var allCurrencies = currenciesOnDate.Currencies;
-            await SaveCurrenciesOnDateToCacheAsync(allCurrencies.Select(c =>
-                new Currency(c.Code, c.Value)).ToArray(), date, cancellationToken);
-            var currency = allCurrencies
+            var currenciesOnDate = await _currencyService.GetAllCurrenciesOnDateAsync(baseCurrency, date, cancellationToken);
+            var currencies = currenciesOnDate.Currencies
+                .Select(c => new Currency(c.Code, c.Value))
+                .ToArray();
+            await SaveCurrenciesOnDateToCacheAsync(currencies, date, cancellationToken);
+            var currency = currencies
                 .First(c => c.Code.Contains(currencyCode, StringComparison.OrdinalIgnoreCase));
             result = new Currency(
                 currency.Code,
@@ -49,11 +49,12 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
                 return result;
             await UpdateCache(cancellationToken);
             var baseCurrency = await _currencyRepository.GetBaseCurrency(cancellationToken);
-            var currencies = await _currencyService
-                .GetAllCurrentCurrenciesAsync(baseCurrency, cancellationToken);
-            await SaveCurrenciesToCacheAsync(currencies.Select(c =>
-                new Currency(c.Code, c.Value)).ToArray(), cancellationToken);
-            var currency = currencies
+            var currenciesFromService = await _currencyService.GetAllCurrentCurrenciesAsync(baseCurrency, cancellationToken);
+            var currencies = currenciesFromService
+                .Select(c => new Currency(c.Code, c.Value))
+                .ToArray();
+            await SaveCurrenciesToCacheAsync(currencies, cancellationToken);
+            var currency = currenciesFromService
                 .First(c => c.Code.Contains(currencyCode, StringComparison.OrdinalIgnoreCase));
             result = new Currency(
                 currency.Code,

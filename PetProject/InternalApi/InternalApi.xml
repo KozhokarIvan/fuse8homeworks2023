@@ -248,7 +248,7 @@
             <param name="cancellationToken">Токен отмены</param>
             <returns>Последний курс валюты с кодом <paramref name="currencyCode"/></returns>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.GetCurrencyInfoOnDate(System.String,System.DateOnly,System.Threading.CancellationToken)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories.ICurrencyRepository.GetLatestCurrencyInfoOnDate(System.String,System.DateOnly,System.Threading.CancellationToken)">
             <summary>
              Получает курс для выбранной валюты на выбранную дату
             </summary>
