@@ -18,16 +18,13 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
 
         public async Task<Currency?> GetLatestCurrencyInfo(string currencyCode, CancellationToken cancellationToken)
         {
-            var currency = await _context.Currencies
-                .AsNoTracking()
-                .Where(c => EF.Functions.ILike(c.CurrencyCode.Name, currencyCode))
-                .OrderByDescending(c => c.DateTime)
-                .Include(c => c.CurrencyCode)
-                .FirstOrDefaultAsync(cancellationToken);
+            var dateTime = DateTime.UtcNow;
+            var today = new DateOnly(dateTime.Year, dateTime.Month, dateTime.Day);
+            var currency = await GetLatestCurrencyInfoOnDate(currencyCode, today, cancellationToken);
             return currency;
         }
 
-        public async Task<Currency?> GetCurrencyInfoOnDate(string currencyCode, DateOnly date, CancellationToken cancellationToken)
+        public async Task<Currency?> GetLatestCurrencyInfoOnDate(string currencyCode, DateOnly date, CancellationToken cancellationToken)
         {
             var dateTime = DateTime.SpecifyKind(new DateTime(date.Year, date.Month, date.Day), DateTimeKind.Utc);
             var currency = await _context.Currencies
@@ -80,10 +77,12 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
                 .OrderByDescending(c => c.DateTime)
                 .ToArrayAsync(cancellationToken);
             var baseCurrencyCode = await _context.CurrencyCodes.FirstAsync(c
-                        => EF.Functions.ILike(c.Name, newBaseCurrency), cancellationToken);
-            var newBaseCurrencyValue = await GetLatestCurrencyInfo(newBaseCurrency, cancellationToken);
+                => EF.Functions.ILike(c.Name, newBaseCurrency), cancellationToken);
             foreach (var currency in cacheValues)
-                currency.Value /= newBaseCurrencyValue!.Value;
+            {
+                var newBaseCurrencyValue = await GetCurrencyOnDateTimeByCode(newBaseCurrency, currency.DateTime, cancellationToken);
+                currency.Value /= newBaseCurrencyValue.Value;
+            }
             var baseCurrencySetting = await _context.Settings
                 .FirstAsync(s => s.Name == _options.Value.BaseCurrencySettingName, cancellationToken);
             baseCurrencySetting.Value = newBaseCurrency;
@@ -98,6 +97,13 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
                 => EF.Functions.ILike(s.Name, _options.Value.BaseCurrencySettingName), cancellationToken))
                 .Value;
             return currencyCode;
+        }
+        private async Task<Currency> GetCurrencyOnDateTimeByCode(string currencyCode, DateTime dateTime, CancellationToken cancellationToken)
+        {
+            var currency = await _context.Currencies
+                .AsNoTracking()
+                .FirstAsync(c => EF.Functions.ILike(c.CurrencyCode.Name, currencyCode) && c.DateTime == dateTime);
+            return currency;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Repositories
         /// <param name="date">Дата</param>
         /// <param name="cancellationToken">Токен отмены</param>
         /// <returns>Курс валюты с кодом <paramref name="currencyCode"/> актуальный на дату <paramref name="date"/></returns>
-        Task<Currency?> GetCurrencyInfoOnDate(string currencyCode, DateOnly date, CancellationToken cancellationToken);
+        Task<Currency?> GetLatestCurrencyInfoOnDate(string currencyCode, DateOnly date, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавляет курсы всех переданных валют относительно базового
