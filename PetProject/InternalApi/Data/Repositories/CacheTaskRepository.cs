@@ -35,12 +35,12 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
             return cacheTask.Id;
         }
 
-        public async Task<CacheTask> GetTaskById(Guid id, CancellationToken cancellationToken)
-            => await _context.CacheTasks.AsNoTracking().FirstAsync(t => t.Id == id, cancellationToken);
+        public Task<CacheTask> GetTaskById(Guid id, CancellationToken cancellationToken)
+            => _context.CacheTasks.AsNoTracking().FirstAsync(t => t.Id == id, cancellationToken);
 
-        public async Task<CacheTask[]> GetUnfinishedCacheTaskIds(CancellationToken cancellationToken)
+        public Task<CacheTask[]> GetUnfinishedCacheTaskIds(CancellationToken cancellationToken)
         {
-            var cacheTasks = await _context.CacheTasks
+            var cacheTasks = _context.CacheTasks
                 .AsNoTracking()
                 .Where(t
                     => t.StatusId == (int)CacheTaskStatuses.Created || t.StatusId == (int)CacheTaskStatuses.InProgress)
@@ -48,8 +48,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
             return cacheTasks;
         }
 
-        public async Task<CacheTask?> GetPendingTask(CancellationToken cancellationToken)
-            => await _context.CacheTasks
+        public Task<CacheTask?> GetPendingTask(CancellationToken cancellationToken)
+            => _context.CacheTasks
             .FirstOrDefaultAsync(t
                 => t.StatusId == (int)CacheTaskStatuses.InProgress || t.StatusId == (int)CacheTaskStatuses.Created, cancellationToken);
 

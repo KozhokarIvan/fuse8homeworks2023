@@ -63,9 +63,9 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Data.Repositories
             return true;
         }
 
-        public async Task<FavoriteExchange?> GetFavoriteExchangeByName(string favoriteExchangeName, CancellationToken cancellationToken)
+        public Task<FavoriteExchange?> GetFavoriteExchangeByName(string favoriteExchangeName, CancellationToken cancellationToken)
         {
-            var favoriteExchange = await _context.FavoriteExchanges
+            var favoriteExchange = _context.FavoriteExchanges
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e =>
                     e.Name == favoriteExchangeName,
@@ -73,9 +73,9 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Data.Repositories
             return favoriteExchange;
         }
 
-        public async Task<FavoriteExchange[]> GetFavoriteExchanges(CancellationToken cancellationToken)
+        public Task<FavoriteExchange[]> GetFavoriteExchanges(CancellationToken cancellationToken)
         {
-            var favoriteExchanges = await _context.FavoriteExchanges
+            var favoriteExchanges = _context.FavoriteExchanges
                 .AsNoTracking()
                 .ToArrayAsync(cancellationToken);
             return favoriteExchanges;

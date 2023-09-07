@@ -16,18 +16,18 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
             _options = options;
         }
 
-        public async Task<Currency?> GetLatestCurrencyInfo(string currencyCode, CancellationToken cancellationToken)
+        public Task<Currency?> GetLatestCurrencyInfo(string currencyCode, CancellationToken cancellationToken)
         {
             var dateTime = DateTime.UtcNow;
             var today = new DateOnly(dateTime.Year, dateTime.Month, dateTime.Day);
-            var currency = await GetLatestCurrencyInfoOnDate(currencyCode, today, cancellationToken);
+            var currency = GetLatestCurrencyInfoOnDate(currencyCode, today, cancellationToken);
             return currency;
         }
 
-        public async Task<Currency?> GetLatestCurrencyInfoOnDate(string currencyCode, DateOnly date, CancellationToken cancellationToken)
+        public Task<Currency?> GetLatestCurrencyInfoOnDate(string currencyCode, DateOnly date, CancellationToken cancellationToken)
         {
             var dateTime = DateTime.SpecifyKind(new DateTime(date.Year, date.Month, date.Day), DateTimeKind.Utc);
-            var currency = await _context.Currencies
+            var currency = _context.Currencies
                 .AsNoTracking()
                 .Where(c
                     => c.DateTime.Date == dateTime.Date
@@ -91,18 +91,18 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Repositories
 
         public async Task<string> GetBaseCurrency(CancellationToken cancellationToken)
         {
-            var currencyCode = (await _context.Settings
+            var currencyCode = await _context.Settings
                 .AsNoTracking()
                 .FirstAsync(s
-                => EF.Functions.ILike(s.Name, _options.Value.BaseCurrencySettingName), cancellationToken))
-                .Value;
-            return currencyCode;
+                => EF.Functions.ILike(s.Name, _options.Value.BaseCurrencySettingName), cancellationToken);
+            return currencyCode.Value;
         }
-        private async Task<Currency> GetCurrencyOnDateTimeByCode(string currencyCode, DateTime dateTime, CancellationToken cancellationToken)
+        private Task<Currency> GetCurrencyOnDateTimeByCode(string currencyCode, DateTime dateTime, CancellationToken cancellationToken)
         {
-            var currency = await _context.Currencies
+            var currency = _context.Currencies
                 .AsNoTracking()
-                .FirstAsync(c => EF.Functions.ILike(c.CurrencyCode.Name, currencyCode) && c.DateTime == dateTime);
+                .FirstAsync(c => EF.Functions.ILike(c.CurrencyCode.Name, currencyCode) && c.DateTime == dateTime, 
+                cancellationToken);
             return currency;
         }
     }

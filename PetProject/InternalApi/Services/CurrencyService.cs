@@ -87,7 +87,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
             return result;
         }
 
-        public async Task<string> GetBaseCurrency(CancellationToken cancellationToken)
-            => await _currencyRepository.GetBaseCurrency(cancellationToken);
+        public Task<string> GetBaseCurrency(CancellationToken cancellationToken)
+            => _currencyRepository.GetBaseCurrency(cancellationToken);
     }
 }

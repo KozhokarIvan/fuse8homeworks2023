@@ -41,7 +41,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
             await _cacheTaskRepository.SetTaskStatus(taskId, (int)CacheTaskStatuses.Succeeded, cancellationToken);
         }
 
-        public async Task SetTaskFailed(Guid taskId, CancellationToken cancellationToken)
-            => await _cacheTaskRepository.SetTaskStatus(taskId, (int)CacheTaskStatuses.Failed, cancellationToken);
+        public Task SetTaskFailed(Guid taskId, CancellationToken cancellationToken)
+            => _cacheTaskRepository.SetTaskStatus(taskId, (int)CacheTaskStatuses.Failed, cancellationToken);
     }
 }
