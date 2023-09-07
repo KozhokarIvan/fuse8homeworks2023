@@ -12,7 +12,7 @@ services:
 
   internalapi:
     container_name: ${INTERNAL_API_CONTAINER_NAME}
-    image: ${DOCKER_REGISTRY-}internalapi
+    image: internalapi
     build:
       context: .
       dockerfile: InternalApi/Dockerfile
@@ -29,7 +29,7 @@ services:
 
   publicapi:
     container_name: ${PUBLIC_API_CONTAINER_NAME}
-    image: ${DOCKER_REGISTRY-}publicapi
+    image: publicapi
     build:
       context: .
       dockerfile: PublicApi/Dockerfile
