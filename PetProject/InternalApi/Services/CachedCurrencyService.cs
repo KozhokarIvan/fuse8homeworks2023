@@ -64,7 +64,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services
             var currentDateTime = DateTime.UtcNow;
             var dateTime = currencyEntity.DateTime;
             var hoursCacheDifference = currentDateTime.Subtract(dateTime).TotalHours;
-            if (hoursCacheDifference < 2)
+            if (hoursCacheDifference < _options.Value.CacheLifeTimeHours)
                 return new Currency(currencyCode, currencyEntity.Value);
             var pendingTask = await _cacheTaskRepository.GetPendingTask(cancellationToken);
             if (pendingTask is not null)
