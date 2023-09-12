@@ -1,5 +1,8 @@
 ﻿namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests
 {
+    /// <summary>
+    /// Модель запроса для получения курса
+    /// </summary>
     public class GetCurrencyRequest
     {
         /// <summary>

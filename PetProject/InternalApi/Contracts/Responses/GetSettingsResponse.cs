@@ -1,5 +1,8 @@
 ﻿namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Responses
 {
+    /// <summary>
+    /// Модель ответа содержащая настройки
+    /// </summary>
     public class GetSettingsResponse
     {
         /// <summary>

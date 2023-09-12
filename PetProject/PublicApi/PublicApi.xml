@@ -4,6 +4,11 @@
         <name>PublicApi</name>
     </assembly>
     <members>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.CreateFavoriteExchangeRequest">
+            <summary>
+            Модель запроса для создания избранной именованной пары валют
+            </summary>
+        </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.CreateFavoriteExchangeRequest.FavoriteName">
             <summary>
             Название избранной пары валют для обмена
@@ -22,6 +27,17 @@
             </summary>
             <example>Rub</example>
         </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.CurrencyCode">
+            <summary>
+            Коды валют
+            </summary>
+            <example>RUB</example>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.EditFavoriteExchangeRequest">
+            <summary>
+            Модель запроса для редактирования избранной именованной пары валют
+            </summary>
+        </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.EditFavoriteExchangeRequest.Currency">
             <summary>
             Код валюты
@@ -34,17 +50,32 @@
             </summary>
             <example>KZT</example>
         </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.SetDecimalPlacesRequest">
+            <summary>
+            Модель запроса для установки точности округления
+            </summary>
+        </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.SetDecimalPlacesRequest.DecimalPlaces">
             <summary>
             Точность округления (количество разрядов после запятой)
             </summary>
             <example>2</example>
         </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.SetDefaultCurrencyRequest">
+            <summary>
+            Модель запроса для установки новой валюты по умолчанию
+            </summary>
+        </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.SetDefaultCurrencyRequest.CurrencyCode">
             <summary>
             Валюта по умолчанию
             </summary>
             <example>RUB</example>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetCurrencyOnDateResponse">
+            <summary>
+            Модель ответа для получения курса валют в нужную дату
+            </summary>
         </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetCurrencyOnDateResponse.Date">
             <summary>
@@ -64,6 +95,11 @@
             </summary>
             <example>70.23</example>
         </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetCurrencyResponse">
+            <summary>
+            Модель ответа для получения курса валют
+            </summary>
+        </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetCurrencyResponse.Code">
             <summary>
             Код валюты
@@ -75,6 +111,11 @@
             Курс валюты относительно базовой валюты
             </summary>
             <example>70.23</example>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetFavoriteExchangeByNameResponse">
+            <summary>
+            Модель ответа для получения избранной пары валют по ее названию
+            </summary>
         </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetFavoriteExchangeByNameResponse.FavoriteName">
             <summary>
@@ -94,11 +135,21 @@
             </summary>
             <example>Kzt</example>
         </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetFavoriteExchangeRateResponse">
+            <summary>
+            Модель ответа для получения курса по названию избранной пары валют
+            </summary>
+        </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetFavoriteExchangeRateResponse.ExchangeRate">
             <summary>
             Курс валюты
             </summary>
             <example>95.9903962843</example>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetFavoriteExchangesResponse">
+            <summary>
+            Модель ответа для получения всех избранных пар валют и их названий
+            </summary>
         </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetFavoriteExchangesResponse.Favorites">
             <summary>
@@ -129,6 +180,11 @@
         </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.FavoriteExchangeEntry.BaseCurrencyCode">
             <summary>Код базовой валюты</summary>
+        </member>
+        <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetSettingsResponse">
+            <summary>
+            Модель ответа для получения настроек API
+            </summary>
         </member>
         <member name="P:Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Responses.GetSettingsResponse.DefaultCurrency">
             <summary>
@@ -189,7 +245,7 @@
             Методы для работы с курсом валют
             </summary>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetDefaultCurrency">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetDefaultCurrency(System.Threading.CancellationToken)">
             <summary>
             Получает курс валюты относительно базового. Базовый курс, курс валюты и точность округления извлекаются из параметров по умолчанию
             </summary>
@@ -197,7 +253,7 @@
             <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetCurrencyByCode(System.String)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetCurrencyByCode(System.String,System.Threading.CancellationToken)">
             <summary>
             Получает курс валюты относительно базового. Базовый курс и точность округления извлекаются из параметров по умолчанию
             </summary>
@@ -207,7 +263,7 @@
             <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetCurrencyOnDate(System.String,System.String)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetCurrencyOnDate(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Получает курс валюты относительно базового для заданной даты. Базовый курс и точность округления извлекаются из параметров по умолчанию
             </summary>
@@ -219,7 +275,7 @@
             <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetFavoriteExchangeRateByName(System.String)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetFavoriteExchangeRateByName(System.String,System.Threading.CancellationToken)">
             <summary>
             Получает избранный курс по названию. Точность округления извлекается из параметров по умолчанию
             </summary>
@@ -229,7 +285,7 @@
             <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetFavoriteExchangeRateByName(System.String,System.String)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetFavoriteExchangeRateByNameOnDate(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Получает избранный курс по названию на выбранную дату. Точность округления извлекается из параметров по умолчанию
             </summary>
@@ -240,21 +296,21 @@
             <response code="429">Возвращает если при попытке получить курс у вас превышен лимит запросов</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetSettings">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.GetSettings(System.Threading.CancellationToken)">
             <summary>
             Получает настройки 
             </summary>
             <response code="200">Возвращает при успешном получении настроек</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.SetDefaultCurrency(Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.SetDefaultCurrencyRequest)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.SetDefaultCurrency(Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.SetDefaultCurrencyRequest,System.Threading.CancellationToken)">
             <summary>
             Изменяет значение для валюты по умолчанию
             </summary>
             <response code="200">Возвращает при успешном изменении валюты по умолчанию</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.SetDecimalPlaces(Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.SetDecimalPlacesRequest)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.CurrencyController.SetDecimalPlaces(Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.SetDecimalPlacesRequest,System.Threading.CancellationToken)">
             <summary>
             Изменяет значение точности округления
             </summary>
@@ -263,50 +319,50 @@
         </member>
         <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController">
             <summary>
-            Методы для работы с избранными курсами обмена
+            Методы для работы с избранными парами валют, которые в будущем могут использоваться для получения курсов
             </summary>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.GetFavoriteExchangeByName(System.String)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.GetFavoriteExchangeByName(System.String,System.Threading.CancellationToken)">
             <summary>
-            Возвращает пару валют для избранного курса обмена по названию
+            Возвращает избранную пару валют по названию
             </summary>
             <param name="name">Название избранного курса обмена</param>
-            <response code="200">Возвращает при успешном получении избранного курса обмена</response>
-            <response code="404">Возвращает если избранного обмена с таким названием не существует</response>
+            <response code="200">Возвращает при успешном получении избранной пары валют</response>
+            <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.GetFavoriteExchanges">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.GetFavoriteExchanges(System.Threading.CancellationToken)">
             <summary>
             Возвращает все избранные пары валют с их названиями
             </summary>
             <response code="200">Возвращает при успешном получении избранных пар валют</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.AddExchangeToFavorites(Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.CreateFavoriteExchangeRequest)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.AddExchangeToFavorites(Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.CreateFavoriteExchangeRequest,System.Threading.CancellationToken)">
             <summary>
-            Создает новую пару валют избранного обмена
+            Создает новую избранную пару валют
             </summary>
-            <response code="200">Возвращает при успешном создании избранного курса обмена</response>
-            <response code="409">Возвращает если избранный курс с такими параметрами уже существует (имя или пара валют)</response>
+            <response code="200">Возвращает при успешном создании избранной пары валют</response>
+            <response code="409">Возвращает если избранная пара валют с такими параметрами уже существует (не уникальное имя или пара валют)</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.EditFavoriteExchange(System.String,Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.EditFavoriteExchangeRequest)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.EditFavoriteExchange(System.String,Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests.EditFavoriteExchangeRequest,System.Threading.CancellationToken)">
             <summary>
-            Редактирует пару валют для избранного курса обмена по названию
+            Редактирует избранную пару валют по названию
             </summary>
-            <param name="name">Название избранного курса обмена</param>
+            <param name="name">Название избранной пары валют</param>
             <param name="request">Параметры запроса</param>
-            <response code="200">Возвращает при успешном редактировании избранного курса обмена</response>
-            <response code="404">Возвращает если избранного обмена с таким названием не существует</response>
+            <response code="200">Возвращает при успешном редактировании избранной пары валют</response>
+            <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
-        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.DeleteFavoriteExchangeByName(System.String)">
+        <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.ExchangesController.DeleteFavoriteExchangeByName(System.String,System.Threading.CancellationToken)">
             <summary>
-            Удаляет пару валют для избранного курса обмена по названию
+            Удаляет избранную пару валют по названию
             </summary>
-            <param name="name">Название избранного курса обмена</param>
-            <response code="200">Возвращает при успешном удалении избранного курса обмена</response>
-            <response code="404">Возвращает если избранного обмена с таким названием не существует</response>
+            <param name="name">Название избранной пары валют</param>
+            <response code="200">Возвращает при успешном удалении избранной пары валют</response>
+            <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
             <response code="500">Возвращает при возникновении необработанной ошибки</response>
         </member>
         <member name="T:Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers.HealthCheckController">
@@ -640,12 +696,6 @@
         </member>
         <member name="M:Fuse8_ByteMinds.SummerSchool.PublicApi.Migrations.AddedInitialSettings.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
-        </member>
-        <member name="T:Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Requests.CurrencyCode">
-            <summary>
-            Коды валют
-            </summary>
-            <example>RUB</example>
         </member>
     </members>
 </doc>

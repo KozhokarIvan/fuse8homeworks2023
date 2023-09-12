@@ -10,10 +10,10 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Services
         {
             _settingsRepository = settingsRepository;
         }
-        public async Task SetDefaultCurrency(string currencyCode, CancellationToken cancellationToken)
-            => await _settingsRepository.SetDefaultCurrency(currencyCode, cancellationToken);
-        public async Task SetDecimalPlaces(int decimalPlaces, CancellationToken cancellationToken)
-            => await _settingsRepository.SetDecimalPlaces(decimalPlaces, cancellationToken);
+        public Task SetDefaultCurrency(string currencyCode, CancellationToken cancellationToken)
+            => _settingsRepository.SetDefaultCurrency(currencyCode, cancellationToken);
+        public Task SetDecimalPlaces(int decimalPlaces, CancellationToken cancellationToken)
+            => _settingsRepository.SetDecimalPlaces(decimalPlaces, cancellationToken);
         public async Task<(string defaultCurrency, int decimalPlaces)> GetSettings(CancellationToken cancellationToken)
         {
             string defaultCurrency = await _settingsRepository.GetDefaultCurrency(cancellationToken);

@@ -1,5 +1,8 @@
 ﻿namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests
 {
+    /// <summary>
+    /// Модель запроса для установки точности округления
+    /// </summary>
     public class SetDecimalPlacesRequest
     {
         /// <summary>

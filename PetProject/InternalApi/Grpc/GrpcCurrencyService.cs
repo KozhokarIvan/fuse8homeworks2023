@@ -1,9 +1,7 @@
 ﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Exceptions;
 using Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc.Contracts;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Options;
-using Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces;
+using Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services;
 using Grpc.Core;
-using Microsoft.Extensions.Options;
 
 namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc
 {
@@ -11,15 +9,12 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc
     {
         private readonly ICachedCurrencyAPI _cachedCurrencyAPI;
         private readonly ICurrencySettingsApi _currencySettingsApi;
-        private readonly IOptionsSnapshot<InternalApiSettings> _options;
         public GrpcCurrencyService(
             ICachedCurrencyAPI cachedCurrencyApi,
-            ICurrencySettingsApi currencySettingsApi,
-            IOptionsSnapshot<InternalApiSettings> options)
+            ICurrencySettingsApi currencySettingsApi)
         {
             _cachedCurrencyAPI = cachedCurrencyApi;
             _currencySettingsApi = currencySettingsApi;
-            _options = options;
         }
         public override async Task<GetCurrencyResponse> GetCurrentCurrency(GetCurrentCurrencyRequest request, ServerCallContext context)
         {
@@ -82,7 +77,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Grpc
             return new GetSettingsResponse
             {
                 StatusCode = Contracts.StatusCodes.NoError,
-                BaseCurrencyCode = _options.Value.BaseCurrency,
+                BaseCurrencyCode = await _currencySettingsApi.GetBaseCurrency(context.CancellationToken),
                 CanRequest = requestLimit > requestCount,
             };
         }

@@ -21,17 +21,96 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "uuid-ossp");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.CacheTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("NewBaseCurrency")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("new_base_currency");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("status_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_cache_tasks");
+
+                    b.HasIndex("StatusId")
+                        .HasDatabaseName("ix_cache_tasks_status_id");
+
+                    b.ToTable("cache_tasks", "cur");
+                });
+
+            modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.CacheTaskStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_cache_task_statuses");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_cache_task_statuses_name");
+
+                    b.ToTable("cache_task_statuses", "cur");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Задача создана"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Задача в обработке"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Задача завершена успешно"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Задача завершена с ошибкой"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Задача отменена"
+                        });
+                });
 
             modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.Currency", b =>
                 {
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_time");
-
-                    b.Property<int>("BaseCurrencyCodeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("base_currency_code_id");
 
                     b.Property<int>("CurrencyCodeId")
                         .HasColumnType("integer")
@@ -41,11 +120,8 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("value");
 
-                    b.HasKey("DateTime", "BaseCurrencyCodeId", "CurrencyCodeId")
+                    b.HasKey("DateTime", "CurrencyCodeId")
                         .HasName("pk_currencies");
-
-                    b.HasIndex("BaseCurrencyCodeId")
-                        .HasDatabaseName("ix_currencies_base_currency_code_id");
 
                     b.HasIndex("CurrencyCodeId")
                         .HasDatabaseName("ix_currencies_currency_code_id");
@@ -1001,23 +1077,62 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.Currency", b =>
+            modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.Setting", b =>
                 {
-                    b.HasOne("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.CurrencyCode", "BaseCurrencyCode")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id")
+                        .HasName("pk_settings");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("ix_settings_name");
+
+                    b.ToTable("settings", "cur");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "baseCurrency",
+                            Value = "USD"
+                        });
+                });
+
+            modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.CacheTask", b =>
+                {
+                    b.HasOne("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.CacheTaskStatus", "Status")
                         .WithMany()
-                        .HasForeignKey("BaseCurrencyCodeId")
+                        .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_currencies_currency_codes_base_currency_code_id");
+                        .HasConstraintName("fk_cache_tasks_cache_task_statuses_status_id");
 
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.Currency", b =>
+                {
                     b.HasOne("Fuse8_ByteMinds.SummerSchool.InternalApi.Data.Entities.CurrencyCode", "CurrencyCode")
                         .WithMany()
                         .HasForeignKey("CurrencyCodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_currencies_currency_codes_currency_code_id");
-
-                    b.Navigation("BaseCurrencyCode");
 
                     b.Navigation("CurrencyCode");
                 });

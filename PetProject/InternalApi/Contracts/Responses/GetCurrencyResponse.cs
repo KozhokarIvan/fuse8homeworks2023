@@ -1,5 +1,8 @@
 ﻿namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Contracts.Responses
 {
+    /// <summary>
+    /// Модель ответа содержащая информацию о валюте
+    /// </summary>
     public class GetCurrencyResponse
     {
         /// <summary>

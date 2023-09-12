@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  internalapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  publicapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

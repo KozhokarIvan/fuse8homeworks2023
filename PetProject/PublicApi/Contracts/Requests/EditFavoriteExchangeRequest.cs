@@ -1,5 +1,8 @@
 ﻿namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Contracts.Requests
 {
+    /// <summary>
+    /// Модель запроса для редактирования избранной именованной пары валют
+    /// </summary>
     public class EditFavoriteExchangeRequest
     {
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using Fuse8_ByteMinds.SummerSchool.InternalApi.Models;
 
-namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Services.Interfaces;
+namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Interfaces.Services;
 
 public interface ICachedCurrencyAPI
 {
@@ -36,6 +36,7 @@ public interface ICachedCurrencyAPI
     /// <param name="favoriteBaseCurrencyCode">Базовая валюта для избранной пары</param>
     /// <param name="favoriteCurrencyCode">Валюта избранной пары</param>
     /// <param name="cancellationToken">Токен отмены</param>
+    /// <param name="date">Дата на которую нужно избранную пару валют</param>
     /// <returns>Курс для избранной пары валют на дату <paramref name="date"/></returns>
     Task<decimal> GetFavoriteCurrencyOnDate(string favoriteBaseCurrencyCode, string favoriteCurrencyCode, DateOnly date, CancellationToken cancellationToken);
 }
