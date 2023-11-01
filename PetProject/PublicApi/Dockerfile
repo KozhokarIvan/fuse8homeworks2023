@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS prepare-restore
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS prepare_restore
 ENV PATH = "${PATH}:/root/.dotnet/tools"
 RUN dotnet tool install --global --no-cache dotnet-subset --version 0.3.2
 WORKDIR /src
@@ -7,7 +7,7 @@ RUN dotnet subset restore PublicApi/PublicApi.csproj --root-directory /src --out
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 as build
 WORKDIR /src
-COPY --from=prepare-restore /src/restore-subset .
+COPY --from=prepare_restore /src/restore_subset .
 RUN dotnet restore PublicApi/PublicApi.csproj
 
 COPY . .
@@ -17,4 +17,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 as runtime
 WORKDIR /app
 COPY --from=build /app/publish .
 EXPOSE 5166
-ENTRYPOINT ["dotnet", "PublicApi/PublicApi.dll"]
+ENTRYPOINT ["dotnet", "PublicApi.dll"]
