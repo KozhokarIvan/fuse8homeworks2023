@@ -1,12 +1,13 @@
 <p align="center">
-  <img src="/assets/logo.png" alt="logo" title="Летняя стажировка fuse8/byteminds"/>
+  <img src="../assets/logo.png" alt="logo" title="Летняя стажировка fuse8/byteminds"/>
 </p>
 
 # Задание к уроку №3
 
 В проекте <code>Tests</code> реализованы тесты на некоторую функциональность проекта.
 Необходимо внести правки в реализацию классов из проекта <code>Domain</code>, чтобы в итоге все тесты проходили успешно. **Вносить изменения в сами тесты не разрешается.**
-- Для прохождения тестов <code>BankCardTests</code> в методе <code>BankCardHelpers.GetUnmaskedCardNumber</code> реализовать получение приватного свойства <code>_number</code> из <code>BankCard</code>. **Вносить изменения в <code>BankCard</code> не разрешается.**
+
+- Для прохождения тестов <code>BankCardTests</code> в методе <code>BankCardHelpers.GetUnmaskedCardNumber</code> реализовать получение приватного свойства <code>\_number</code> из <code>BankCard</code>. **Вносить изменения в <code>BankCard</code> не разрешается.**
 - Для прохождения тестов <code>AnimalTests</code> нужно правильно реализовать/переопределить методы и свойства у классов-наследников в файле <code>Animals.cs</code>. **Вносить изменения в класс <code>Animal</code> не разрешается.**
 - Для прохождения тестов <code>ExceptionHandlerTests</code> нужно реализовать обработку исключений в методе <code>ExceptionHandler.Handle</code>. **Изменять код в <code>MoneyException</code> не разрешается.**
 - Для прохождения тестов <code>LazyTests</code> нужно добавить реализацию класса <code>Lazy</code>. При первом обращении к свойству <code>Value</code> должен вызываться экшен для получения значения.
