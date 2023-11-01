@@ -1,7 +1,6 @@
 <details open>
     <summary><h1>Описание</h1></summary>
     
-### [Инструкция по запуску](example/README.md)
     
 Проект является API для работы с курсами валют и представляет из себя два сервиса: `PublicAPI` и `InternalAPI` которые общаются между собой через gRPC. `InternalAPI` обращается к [стороннему API](https://currencyapi.com/) и кеширует все запросы в базу данных
 
@@ -21,10 +20,12 @@
 
 </details>
 
+### [_Инструкция по запуску_](example/README.md)
+
 <details open>
     <summary><h1>Swagger</h1></summary>
     <details open>
-        <summary><b><img src="assets/endpoints-interactive/public/title.png" /></b></summary>
+        <summary><img src="assets/endpoints-interactive/public/title.png" /></summary>
         <details>
             <summary><img src="assets/endpoints-interactive/public/currency/title.png" /></summary>
                 <details>
@@ -127,17 +128,17 @@
 <details open>
     <summary><h1>Демонстрация работы</h1></summary>
     <details>
-        <summary><h3>Получение настроек</h3></summary>
+        <summary><h4>Получение настроек</h4></summary>
         <img src="assets/demo/gifs/GetSettings.gif" />
         <img src="assets/demo/gifs/GetSettings.png" />
     </details>
     <details>
-        <summary><h3>Получение текущего курса валюты по умолчанию относительно курса базовой валюты</h3></summary>
+        <summary><h4>Получение текущего курса валюты по умолчанию относительно курса базовой валюты</h4></summary>
         <img src="assets/demo/gifs/GetCurrentCurrency.gif" />
         <img src="assets/demo/gifs/GetCurrentCurrency.png" />
     </details>
     <details>
-        <summary><h3>Создание фоновой задачи на смену базовой валюты</h3></summary>
+        <summary><h4>Создание фоновой задачи на смену базовой валюты</h4></summary>
         <img src="assets/demo/gifs/ChangeBaseCurrencyTask.gif" />
         <img src="assets/demo/gifs/ChangeBaseCurrencyTask1.png" />
         <img src="assets/demo/gifs/ChangeBaseCurrencyTask2.png" />
@@ -146,35 +147,35 @@
         <img src="assets/demo/ChangeBaseCurrencyTaskSucceded.png" />
     </details>
     <details>
-        <summary><h3>Получение текущего курса валюты по умолчанию относительно курса новой базовой валюты</h3></summary>
+        <summary><h4>Получение текущего курса валюты по умолчанию относительно курса новой базовой валюты</h4></summary>
         <img src="assets/demo/gifs/GetCurrencyAfterBaseChanged.gif" />
         <img src="assets/demo/gifs/GetCurrencyAfterBaseChanged.png" />
     </details>
     <details>
-        <summary><h3>Создание избранной пары валют для быстрого получения курса</h3></summary>
+        <summary><h4>Создание избранной пары валют для быстрого получения курса</h4></summary>
         <img src="assets/demo/gifs/AddedFavoriteCurrency.gif" />
         <img src="assets/demo/gifs/AddedFavoriteCurrency1.png" />
         <img src="assets/demo/gifs/AddedFavoriteCurrency2.png" />
     </details>
     <details>
-        <summary><h3>Вывод всех избранных пар валют</h3></summary>
+        <summary><h4>Вывод всех избранных пар валют</h4></summary>
         <img src="assets/demo/gifs/DisplayedAllFavoriteCurrencies.gif" />
         <img src="assets/demo/gifs/DisplayedAllFavoriteCurrencies.png" />
     </details>
     <details>
-        <summary><h3>Вывод параметров избранной пары валют по ее названию</h3></summary>
+        <summary><h4>Вывод параметров избранной пары валют по ее названию</h4></summary>
         <img src="assets/demo/gifs/DisplayedFavoriteCurrencyByName.gif" />
         <img src="assets/demo/gifs/DisplayedFavoriteCurrencyByName1.png" />
         <img src="assets/demo/gifs/DisplayedFavoriteCurrencyByName2.png" />
     </details>
     <details>
-        <summary><h3>Вывод курса для избранной пары валют</h3></summary>
+        <summary><h4>Вывод курса для избранной пары валют</h4></summary>
         <img src="assets/demo/gifs/DisplayedFavoriteExchangeRateByName.gif" />
         <img src="assets/demo/gifs/DisplayedFavoriteExchangeRateByName1.png" />
         <img src="assets/demo/gifs/DisplayedFavoriteExchangeRateByName2.png" />
     </details>
     <details>
-        <summary><h3>Удаление избранной пары валют</h3></summary>
+        <summary><h4>Удаление избранной пары валют</h4></summary>
         <img src="assets/demo/gifs/DeletedFavoriteCurrencyByName.gif" />
         <img src="assets/demo/gifs/DeletedFavoriteCurrencyByName1.png" />
         <img src="assets/demo/gifs/DeletedFavoriteCurrencyByName2.png" />
