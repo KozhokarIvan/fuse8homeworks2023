@@ -8,7 +8,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
     /// <summary>
     /// Методы для работы с избранными парами валют, которые в будущем могут использоваться для получения курсов
     /// </summary>
-    [Route("exchanges")]
+    [Route("favorites")]
     public class ExchangesController : ControllerBase
     {
 
@@ -26,7 +26,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetFavoriteExchangeByNameResponse), StatusCodes.Status200OK)]
-        [HttpGet("favorites/{name}")]
+        [HttpGet("{name}")]
         public async Task<IActionResult> GetFavoriteExchangeByName(string name, CancellationToken cancellationToken)
         {
             var result = await _favoriteExchangesService.GetFavoriteExchangeByName(name, cancellationToken);
@@ -47,7 +47,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="200">Возвращает при успешном получении избранных пар валют</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetFavoriteExchangesResponse), StatusCodes.Status200OK)]
-        [HttpGet("favorites")]
+        [HttpGet]
         public async Task<IActionResult> GetFavoriteExchanges(CancellationToken cancellationToken)
         {
             var result = await _favoriteExchangesService.GetFavoriteExchanges(cancellationToken);
@@ -66,7 +66,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="409">Возвращает если избранная пара валют с такими параметрами уже существует (не уникальное имя или пара валют)</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
         [ProducesResponseType(typeof(GetFavoriteExchangeByNameResponse), StatusCodes.Status200OK)]
-        [HttpPost("favorites")]
+        [HttpPost]
         public async Task<IActionResult> AddExchangeToFavorites(CreateFavoriteExchangeRequest request, CancellationToken cancellationToken)
         {
             var result = await _favoriteExchangesService.AddExchangeToFavorites(
@@ -87,7 +87,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="200">Возвращает при успешном редактировании избранной пары валют</response>
         /// <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
-        [HttpPut("favorites/{name}")]
+        [HttpPut("{name}")]
         public async Task<IActionResult> EditFavoriteExchange(string name, EditFavoriteExchangeRequest request, CancellationToken cancellationToken)
         {
             var result = await _favoriteExchangesService.EditFavoriteExchange(
@@ -109,7 +109,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// <response code="200">Возвращает при успешном удалении избранной пары валют</response>
         /// <response code="404">Возвращает если избранной пары валют с таким названием не существует</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
-        [HttpDelete("favorites/{name}")]
+        [HttpDelete("{name}")]
         public async Task<IActionResult> DeleteFavoriteExchangeByName(string name, CancellationToken cancellationToken)
         {
             var result = await _favoriteExchangesService.DeleteFavoriteExchangeByName(name, cancellationToken);

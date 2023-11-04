@@ -8,7 +8,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers;
 /// <summary>
 /// Методы для проверки работоспособности PublicApi
 /// </summary>
-[Route("healthcheck")]
+[Route("health")]
 public class HealthCheckController : ControllerBase
 {
     private readonly IHealthCheckService _healthCheckService;

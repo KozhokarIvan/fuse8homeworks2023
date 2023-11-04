@@ -9,7 +9,7 @@ namespace Fuse8_ByteMinds.SummerSchool.InternalApi.Controllers
     /// <summary>
     /// Методы для работы с внешним API https://currencyapi.com/
     /// </summary>
-    [Route("currency")]
+    [Route("currencies")]
     public class CurrencyController : ControllerBase
     {
         private readonly ICachedCurrencyAPI _cachedCurrencyAPI;

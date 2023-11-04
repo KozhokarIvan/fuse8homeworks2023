@@ -8,7 +8,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
     /// <summary>
     /// Методы для работы с курсом валют
     /// </summary>
-    [Route("currency")]
+    [Route("currencies")]
     public class CurrencyController : ControllerBase
     {
         private readonly ICurrencyService _currencyService;
@@ -41,7 +41,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         }
 
         /// <summary>
-        /// Получает курс валюты относительно базового. Базовый курс и точность округления извлекаются из параметров по умолчанию
+        /// Получает курс выбранной валюты относительно базовой валюты. Базовый курс и точность округления извлекаются из параметров по умолчанию
         /// </summary>
         /// <param name="currency">Валюта для которой нужно получить курс</param>
         /// <response code="200">Возвращает при успешном получении курса</response>
@@ -62,7 +62,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         }
 
         /// <summary>
-        /// Получает курс валюты относительно базового для заданной даты. Базовый курс и точность округления извлекаются из параметров по умолчанию
+        /// Получает курс выбранной валюты относительно базовой валюты для заданной даты. Базовый курс и точность округления извлекаются из параметров по умолчанию
         /// </summary>
         /// <param name="currency">Валюта для которой нужно получить курс</param>
         /// <param name="date">Дата для которой требуется получить курс</param>
@@ -153,7 +153,7 @@ namespace Fuse8_ByteMinds.SummerSchool.PublicApi.Controllers
         /// </summary>
         /// <response code="200">Возвращает при успешном изменении валюты по умолчанию</response>
         /// <response code="500">Возвращает при возникновении необработанной ошибки</response>
-        [HttpPost("/settings/currency")]
+        [HttpPost("/settings/default-currency")]
         public async Task<IActionResult> SetDefaultCurrency(SetDefaultCurrencyRequest request, CancellationToken cancellationToken)
         {
             await _settingsService.SetDefaultCurrency(request.CurrencyCode.ToString(), cancellationToken);
