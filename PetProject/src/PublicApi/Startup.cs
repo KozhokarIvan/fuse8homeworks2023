@@ -11,6 +11,7 @@ using Fuse8_ByteMinds.SummerSchool.PublicApi.Middleware;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Options;
 using Fuse8_ByteMinds.SummerSchool.PublicApi.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -114,7 +115,6 @@ public class Startup
                     o.Address = new Uri(_configuration.GetValue<string>("GrpcUri")!);
                 })
             .AddAuditHandler(audit => audit.IncludeRequestBody());
-
         string connectionString = _configuration.GetConnectionString(nameof(PublicApiDbContext))!;
         services.AddDbContext<PublicApiDbContext>(options =>
         {
@@ -132,11 +132,10 @@ public class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         app.UseMiddleware<RequestLoggingMiddleware>();
-        if (env.IsDevelopment())
-        {
+  
             app.UseSwagger();
             app.UseSwaggerUI();
-        }
+        
 
         app.UseRouting()
             .UseEndpoints(endpoints => endpoints.MapControllers());
